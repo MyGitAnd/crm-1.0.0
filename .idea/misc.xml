@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/../../04-SSM/06-SSM-user-02" />
+    <file type="web" url="file://$PROJECT_DIR$/../../04-SSM/SSM-CRM" />
+    <file type="web" url="file://$PROJECT_DIR$/../../04-SSM/SSM-CRM-test" />
+    <file type="web" url="file://$PROJECT_DIR$" />
+    <file type="web" url="file://D:/教学视频/CRM/workspaceForCrm/crm" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="D:/教学视频/CRM/workspaceForCrm/crm/target/maven-archiver/pom.properties" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

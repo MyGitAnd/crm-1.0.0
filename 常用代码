@@ -1,0 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+
+            request.getServerPort()+request.getContextPath();
+%>
+
+$.ajax({
+    url:"<%=basePath%>/",
+    type:"post",
+    data:{
+    },
+    dataType:"json",
+    success:function(){
+
+
+    }
+});
+ $.get("demo_test.asp",{参数},function(data,status){
+
+  });
+ $.post("demo_test.asp",{参数},function(data,status){
+
+  });
