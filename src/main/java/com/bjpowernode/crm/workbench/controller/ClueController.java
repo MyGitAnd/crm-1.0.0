@@ -1,5 +1,6 @@
 package com.bjpowernode.crm.workbench.controller;
 import com.bjpowernode.crm.base.base.ResultVo;
+import com.bjpowernode.crm.workbench.base.Activity;
 import com.bjpowernode.crm.workbench.base.Clue;
 import com.bjpowernode.crm.settings.bean.User;
 import com.bjpowernode.crm.workbench.base.ClueRemark;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class ClueController {
@@ -92,6 +94,42 @@ public class ClueController {
     @ResponseBody
     public ResultVo deleteClueRemark(String id){
       return   clueService.deleteClueRemark(id);
+    }
+
+    //查询关联的市场活动
+    @RequestMapping("/workbench/clueActivity/selectClueActivity")
+    @ResponseBody
+    public List<Activity> selectClueActivity(String id){
+
+    List<Activity> activityList = clueService.selectClueActivity(id);
+    return activityList;
+    }
+
+    //查询市场活动
+    @RequestMapping("/workbench/clueActivity/selectActivity")
+    @ResponseBody
+    public List<Activity> selectActivity(String id,String name){
+       List<Activity> activityList = clueService.selectActivity(id,name);
+
+       return activityList;
+    }
+//添加关联
+    @RequestMapping("/workbench/clueActivity/addClueActivitys")
+    @ResponseBody
+    public ResultVo addClueActivitys(String id,String ids){
+
+        ResultVo resultVo = clueService.addClueActivitys(id,ids);
+
+        return resultVo;
+    }
+
+    //解除关联
+    @RequestMapping("/workbench/clueActivity/deleteClueActivity")
+    @ResponseBody
+    public ResultVo deleteClueActivity(String activityId,String clueId){
+
+        ResultVo resultVo = clueService.deleteClueActivity(activityId,clueId);
+        return resultVo;
     }
 
 

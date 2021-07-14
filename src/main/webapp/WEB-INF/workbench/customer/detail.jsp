@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+
@@ -243,7 +244,9 @@ request.getServerPort()+request.getContextPath();
                             <label for="edit-customerOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
                                 <select class="form-control" name="owner" id="edit-customerOwner">
-
+                                    <c:forEach var="user" items="${applicationScope.users}">
+                                        <option value="${user.id}">${user.name}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                             <label for="edit-customerName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
@@ -568,17 +571,17 @@ request.getServerPort()+request.getContextPath();
     $("#editCustomer").click(function () {
         //修改的模态框
         $("#editCustomerModal").modal("show");
-        $.ajax({
-            url:"<%=basePath%>/workbench/customer/users",
-            type:"post",
-            dataType:"json",
-            success:function (data) {
-                $("#edit-customerOwner").html("");
-                for (var i = 0;i < data.length; i++ ){
-                    $("#edit-customerOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>")
-                }
-            }
-        });
+        <%--$.ajax({--%>
+            <%--url:"<%=basePath%>/workbench/customer/users",--%>
+            <%--type:"post",--%>
+            <%--dataType:"json",--%>
+            <%--success:function (data) {--%>
+                <%--$("#edit-customerOwner").html("");--%>
+                <%--for (var i = 0;i < data.length; i++ ){--%>
+                    <%--$("#edit-customerOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>")--%>
+                <%--}--%>
+            <%--}--%>
+        <%--});--%>
         //获取id
         $.ajax({
             url:"<%=basePath%>/workbench/customer/selectCustomerORId",

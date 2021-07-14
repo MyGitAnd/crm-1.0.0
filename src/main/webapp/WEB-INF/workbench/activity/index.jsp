@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+
@@ -48,7 +49,9 @@
 							<label for="create-marketActivityOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" name="owner" id="create-marketActivityOwner">
-
+                                    <c:forEach var="user" items="${applicationScope.users}">
+                                        <option value="${user.id}">${user.name}</option>
+                                    </c:forEach>
 								</select>
 							</div>
                             <label for="create-marketActivityName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
@@ -109,7 +112,9 @@
 							<label for="edit-marketActivityOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" name="owner" id="edit-marketActivityOwner">
-
+                                    <c:forEach var="user" items="${applicationScope.users}">
+                                        <option value="${user.id}">${user.name}</option>
+                                    </c:forEach>
 								</select>
 							</div>
                             <label for="edit-marketActivityName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
@@ -391,17 +396,17 @@
 
    //查询所有者的信息
    function users(){
-       $.ajax({
-           url:"<%=basePath%>/workbench/activity/users",
-           type:"post",
-           dataType:"json",
-           success:function (data) {
-            $("#create-marketActivityOwner").html("");
-            for (var i = 0; i < data.length;i++){
-                $("#create-marketActivityOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
-            }
-           }
-       });
+       <%--$.ajax({--%>
+           <%--url:"<%=basePath%>/workbench/activity/users",--%>
+           <%--type:"post",--%>
+           <%--dataType:"json",--%>
+           <%--success:function (data) {--%>
+            <%--$("#create-marketActivityOwner").html("");--%>
+            <%--for (var i = 0; i < data.length;i++){--%>
+                <%--$("#create-marketActivityOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");--%>
+            <%--}--%>
+           <%--}--%>
+       <%--});--%>
    }
 
 
@@ -508,17 +513,17 @@
             }else {
                 //合法打开模态框
                 $("#editActivityModal").modal("show");
-                $.ajax({
-                    url:"<%=basePath%>/workbench/activity/users",
-                    type:"post",
-                    dataType:"json",
-                    success:function (data) {
-                        $("#edit-marketActivityOwner").html("");
-                        for (var i = 0; i < data.length;i++){
-                            $("#edit-marketActivityOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
-                        }
-                    }
-                });
+                <%--$.ajax({--%>
+                    <%--url:"<%=basePath%>/workbench/activity/users",--%>
+                    <%--type:"post",--%>
+                    <%--dataType:"json",--%>
+                    <%--success:function (data) {--%>
+                        <%--$("#edit-marketActivityOwner").html("");--%>
+                        <%--for (var i = 0; i < data.length;i++){--%>
+                            <%--$("#edit-marketActivityOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");--%>
+                        <%--}--%>
+                    <%--}--%>
+                <%--});--%>
                 var id = $(".sun:checked")[0].value;
                 $.ajax({
                    url:"<%=basePath%>/workbench/activity/editActivity" ,

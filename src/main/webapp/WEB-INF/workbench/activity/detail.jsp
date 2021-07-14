@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+
@@ -94,7 +95,9 @@
                             <label for="edit-marketActivityOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
                                 <select class="form-control" id="edit-marketActivityOwner">
-
+                                    <c:forEach var="user" items="${applicationScope.users}">
+                                        <option value="${user.id}">${user.name}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                             <label for="edit-marketActivityName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
@@ -277,17 +280,17 @@
     });
     //修改的查询下拉框
     $(function () {
-        $.ajax({
-            url:"<%=basePath%>/workbench/activity/users",
-            type:"post",
-            dataType:"json",
-            success:function (data) {
-                $("#edit-marketActivityOwner").html("");
-                for (var i = 0; i < data.length;i++){
-                    $("#edit-marketActivityOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
-                }
-            }
-        });
+        <%--$.ajax({--%>
+            <%--url:"<%=basePath%>/workbench/activity/users",--%>
+            <%--type:"post",--%>
+            <%--dataType:"json",--%>
+            <%--success:function (data) {--%>
+                <%--$("#edit-marketActivityOwner").html("");--%>
+                <%--for (var i = 0; i < data.length;i++){--%>
+                    <%--$("#edit-marketActivityOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");--%>
+                <%--}--%>
+            <%--}--%>
+        <%--});--%>
         $.ajax({
             url:"<%=basePath%>/workbench/activity/editActivity" ,
             data:{

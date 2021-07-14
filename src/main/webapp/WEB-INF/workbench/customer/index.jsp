@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+
@@ -53,7 +54,9 @@
 							<label for="create-customerOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" name="owner" id="create-customerOwner">
-
+                                    <c:forEach var="user" items="${applicationScope.users}">
+                                        <option value="${user.id}">${user.name}</option>
+                                    </c:forEach>
 								</select>
 							</div>
 							<label for="create-customerName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
@@ -133,6 +136,9 @@
 							<label for="edit-customerOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" name="owner" id="edit-customerOwner">
+                                    <c:forEach var="user" items="${applicationScope.users}">
+                                        <option value="${user.id}">${user.name}</option>
+                                    </c:forEach>
 								</select>
 							</div>
 							<label for="edit-customerName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
@@ -353,20 +359,20 @@
       refresh(1,3);
     });
     //查询所有者信息
-    users();
-    function users(){
-        $.ajax({
-            url:"<%=basePath%>/workbench/customer/users",
-            type:"post",
-            dataType:"json",
-            success:function (data) {
-                $("#create-customerOwner").html("");
-                for (var i = 0;i < data.length; i++ ){
-                    $("#create-customerOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>")
-                }
-            }
-        });
-    }
+    <%--users();--%>
+    <%--function users(){--%>
+        <%--$.ajax({--%>
+            <%--url:"<%=basePath%>/workbench/customer/users",--%>
+            <%--type:"post",--%>
+            <%--dataType:"json",--%>
+            <%--success:function (data) {--%>
+                <%--$("#create-customerOwner").html("");--%>
+                <%--for (var i = 0;i < data.length; i++ ){--%>
+                    <%--$("#create-customerOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>")--%>
+                <%--}--%>
+            <%--}--%>
+        <%--});--%>
+    <%--}--%>
     //添加日历插件
     (function($){
         $.fn.datetimepicker.dates['zh-CN'] = {
@@ -497,17 +503,17 @@
             //可以修改
             $("#editCustomerModal").modal("show");
             //查询所有者信息的方法
-            $.ajax({
-                url:"<%=basePath%>/workbench/customer/users",
-                type:"post",
-                dataType:"json",
-                success:function (data) {
-                    $("#edit-customerOwner").html("");
-                    for (var i = 0;i < data.length; i++ ){
-                        $("#edit-customerOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>")
-                    }
-                }
-            });
+            <%--$.ajax({--%>
+                <%--url:"<%=basePath%>/workbench/customer/users",--%>
+                <%--type:"post",--%>
+                <%--dataType:"json",--%>
+                <%--success:function (data) {--%>
+                    <%--$("#edit-customerOwner").html("");--%>
+                    <%--for (var i = 0;i < data.length; i++ ){--%>
+                        <%--$("#edit-customerOwner").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>")--%>
+                    <%--}--%>
+                <%--}--%>
+            <%--});--%>
 
             //获取id
             var id = $(".sun:checked")[0].value;

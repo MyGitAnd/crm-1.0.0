@@ -26,7 +26,14 @@ public enum CrmEnum {
     Clue__Delete_delete("004-003","删除线索失败!"),
     ClueRemark__add_insert("004-004","添加备注信息失败!"),
     ClueRemark__Edit_update("004-005","修改备注信息失败!"),
-    ClueRemark__Delete_Delete("004-006","删除备注信息失败!");
+    ClueRemark__Delete_Delete("004-006","删除备注信息失败!"),
+    ClueActivity__add_insert("004-007","关联市场活动失败!"),
+    ClueActivity__delete_delete("004-008","解除关联市场活动失败!"),
+    DicType__Insert_add("005-001","添加类型失败!"),
+    DicType__Update_edit("005-002","修改类型失败!"),
+    DicValue__add_add("005-003","添加类型失败!"),
+    DicValue__update_update("005-004","修改类型失败!"),
+    DicValue__Delete_delete("005-005","删除类型失败!");
 
 
     private String type;

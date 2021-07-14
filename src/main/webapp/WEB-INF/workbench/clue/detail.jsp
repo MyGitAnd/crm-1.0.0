@@ -54,6 +54,7 @@
 </head>
 <body>
 
+
 <!-- 关联市场活动的模态窗口 -->
 <div class="modal fade" id="bundModal" role="dialog">
     <div class="modal-dialog" role="document" style="width: 80%;">
@@ -66,18 +67,26 @@
             </div>
             <div class="modal-body">
                 <div class="btn-group" style="position: relative; top: 18%; left: 8px;">
-                    <form class="form-inline" role="form">
-                        <div class="form-group has-feedback">
-                            <input type="text" class="form-control" style="width: 300px;"
-                                   placeholder="请输入市场活动名称，支持模糊查询">
-                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                        </div>
-                    </form>
+                    <%--<div class="form-group has-feedback ">--%>
+                        <%--<input type="text" id="name" class="form-control" style="width: 300px;"--%>
+                               <%--placeholder="请输入市场活动名称，支持模糊查询">--%>
+                        <%--<input type="button" id="likeClue" class="btn btn-default" value="查询">--%>
+                        <%--<span class="glyphicon glyphicon-search form-control-feedback"></span>--%>
+                    <%--</div>--%>
+
+
+                    <div class="input-group">
+                        <input class="form-control width100" id="name" placeholder="请输入市场活动名称，支持模糊查询">
+                        <span class="input-group-btn">
+                        <button class="btn btn-info" id="likeClue">搜索</button>
+                    </span>
+                    </div>
+
                 </div>
                 <table id="activityTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
                     <thead>
                     <tr style="color: #B3B3B3;">
-                        <td><input type="checkbox"/></td>
+                        <td><input type="checkbox" id="father"/></td>
                         <td>名称</td>
                         <td>开始日期</td>
                         <td>结束日期</td>
@@ -85,27 +94,14 @@
                         <td></td>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="checkbox"/></td>
-                        <td>发传单</td>
-                        <td>2020-10-10</td>
-                        <td>2020-10-20</td>
-                        <td>zhangsan</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"/></td>
-                        <td>发传单</td>
-                        <td>2020-10-10</td>
-                        <td>2020-10-20</td>
-                        <td>zhangsan</td>
-                    </tr>
+                    <tbody id="ClueActivity">
+
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">关联</button>
+                <button type="button" class="btn btn-primary" id="addClueActivity" data-dismiss="modal">关联</button>
             </div>
         </div>
     </div>
@@ -447,29 +443,21 @@
                     <td></td>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>发传单</td>
-                    <td>2020-10-10</td>
-                    <td>2020-10-20</td>
-                    <td>zhangsan</td>
-                    <td><a href="javascript:void(0);" style="text-decoration: none;"><span
-                            class="glyphicon glyphicon-remove"></span>解除关联</a></td>
-                </tr>
-                <tr>
-                    <td>发传单</td>
-                    <td>2020-10-10</td>
-                    <td>2020-10-20</td>
-                    <td>zhangsan</td>
-                    <td><a href="javascript:void(0);" style="text-decoration: none;"><span
-                            class="glyphicon glyphicon-remove"></span>解除关联</a></td>
-                </tr>
+                <tbody id="clueTbody">
+                <%-- <tr>
+                     <td>发传单</td>
+                     <td>2020-10-10</td>
+                     <td>2020-10-20</td>
+                     <td>zhangsan</td>
+                     <td><a href="javascript:void(0);" style="text-decoration: none;"><span
+                             class="glyphicon glyphicon-remove"></span>解除关联</a></td>
+                 </tr>--%>
                 </tbody>
             </table>
         </div>
 
         <div>
-            <a href="javascript:void(0);" data-toggle="modal" data-target="#bundModal"
+            <a href="javascript:void(0);" data-toggle="modal" id="selectBindModal" data-target="#bundModal"
                style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>关联市场活动</a>
         </div>
     </div>
@@ -479,9 +467,171 @@
 <div style="height: 200px;"></div>
 </body>
 </html>
-
-
 <script>
+
+    //查询关联的市场活动
+    $.ajax({
+        url: "<%=basePath%>/workbench/clueActivity/selectClueActivity",
+        type: "post",
+        data: {
+            'id': '${requestScope.id}'
+        },
+        dataType: "json",
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                $("#clueTbody").append(" <tr>\n" +
+                    "                    <td>" + data[i].name + "</td>\n" +
+                    "                    <td>" + data[i].startDate + "</td>\n" +
+                    "                    <td>" + data[i].endDate + "</td>\n" +
+                    "                    <td>" + data[i].owner + "</td>\n" +
+                    "                    <td><a href=\"javascript:void(0);\" onclick=\"deleteClueActivity('" + data[i].id + "')\" style=\"text-decoration: none;\"><span\n" +
+                    "                           class=\"glyphicon glyphicon-remove\"></span>解除关联</a></td>\n" +
+                    "                </tr>")
+            }
+        }
+    });
+
+    //关联市场活动信息
+    $("#selectBindModal").click(function () {
+        $("#likeClue").click(function () {
+            $.ajax({
+                url: "<%=basePath%>/workbench/clueActivity/selectActivity",
+                data: {
+                    'id': '${requestScope.id}',
+                    'name': $("#name").val()
+                },
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    refresh(data)
+                }
+            })
+        });
+        $("#name").keypress(function (ele) {
+            if (ele.keyCode == 13) {
+                $.ajax({
+                    url: "<%=basePath%>/workbench/clueActivity/selectActivity",
+                    data: {
+                        'id': '${requestScope.id}',
+                        'name': $("#name").val()
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        refresh(data)
+                    }
+                })
+            }
+        });
+    });
+    //复选框
+    $("#father").click(function () {
+        $(".sun").prop("checked", $(this).prop("checked"));
+    });
+
+    function checkeds() {
+        //获取sun的个数
+        var length = $(".sun").length;
+        //获取勾中的个数
+        var checkedLength = $(".sun:checked").length;
+        if (length == checkedLength) {
+            $("#father").prop("checked", true);
+        } else {
+            $("#father").prop("checked", false);
+        }
+
+    }
+
+    //关联市场活动
+    $("#addClueActivity").click(function () {
+        var checkedLength = $(".sun:checked").length;
+        if (checkedLength == 0) {
+            layer.alert("至少选择一个进行关联!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else {
+            var ids = [];
+            $(".sun:checked").each(function () {
+                ids.push($(this).val())
+            });
+
+            $.ajax({
+                url: "<%=basePath%>/workbench/clueActivity/addClueActivitys",
+                data: {
+                    'id': '${requestScope.id}',
+                    'ids': ids.join()
+                },
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //刷新当前页面
+                        window.location.reload();
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
+                }
+            });
+
+        }
+    });
+
+    //解除关联
+    function deleteClueActivity(id) {
+        layer.confirm('确定要解除关联吗？', {
+            btn: ['确定', '取消']
+        }, function () {
+            $.ajax({
+                url: "<%=basePath%>/workbench/clueActivity/deleteClueActivity",
+                data: {
+                    'activityId': id,
+                    'clueId': '${requestScope.id}'
+                },
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //刷新当前页面
+                        window.location.reload();
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
+                }
+            })
+        });
+    }
+
+    //定义一个刷新的方法
+    function refresh(data) {
+        $("#ClueActivity").html("");
+        for (var i = 0; i < data.length; i++) {
+            $("#ClueActivity").append("<tr>\n" +
+                "\t\t\t\t\t\t\t\t<td><input type=\"checkbox\" class='sun' value='" + data[i].id + "'/></td>\n" +
+                "\t\t\t\t\t\t\t\t<td>" + data[i].name + "</td>\n" +
+                "\t\t\t\t\t\t\t\t<td>" + data[i].startDate + "</td>\n" +
+                "\t\t\t\t\t\t\t\t<td>" + data[i].endDate + "</td>\n" +
+                "\t\t\t\t\t\t\t\t<td>" + data[i].owner + "</td>\n" +
+                "\t\t\t\t\t\t\t</tr>");
+        }
+
+    }
+
+
     (function ($) {
         $.fn.datetimepicker.dates['zh-CN'] = {
             days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
@@ -724,7 +874,7 @@
                             skin: 'layer-ext-demo'
                         });
                         //刷新当前页面
-                        $("#h5"+id).parent().parent().remove();
+                        $("#h5" + id).parent().parent().remove();
                     } else {
                         layer.alert(data.message, {
                             icon: 5,

@@ -6,9 +6,13 @@ import com.bjpowernode.crm.base.exception.CrmEnum;
 import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.base.utils.DateTimeUtil;
 import com.bjpowernode.crm.base.utils.UUIDUtil;
+import com.bjpowernode.crm.workbench.base.Activity;
 import com.bjpowernode.crm.workbench.base.Clue;
 import com.bjpowernode.crm.settings.bean.User;
+import com.bjpowernode.crm.workbench.base.ClueActivity;
 import com.bjpowernode.crm.workbench.base.ClueRemark;
+import com.bjpowernode.crm.workbench.mapper.ActivityMapper;
+import com.bjpowernode.crm.workbench.mapper.ClueActivityMapper;
 import com.bjpowernode.crm.workbench.mapper.ClueMapper;
 import com.bjpowernode.crm.settings.mapper.UserMapper;
 import com.bjpowernode.crm.workbench.mapper.ClueRemarkMapper;
@@ -33,6 +37,12 @@ public class ClueServiceImpl implements ClueService {
 
     @Autowired
     private ClueRemarkMapper clueRemarkMapper;
+
+    @Autowired
+    private ClueActivityMapper clueActivityMapper;
+
+    @Autowired
+    private ActivityMapper activityMapper;
     //添加和修改的方法
     @Override
     public ResultVo addAndUpdateClue(Clue clue, User user) {
@@ -214,6 +224,92 @@ public class ClueServiceImpl implements ClueService {
         }
         resultVo.setOk(true);
         resultVo.setMessage("删除备注信息成功!");
+        return resultVo;
+    }
+
+    //查询关联的市场活动
+    @Override
+    public List<Activity> selectClueActivity(String id) {
+        ClueActivity clueActivity = new ClueActivity();
+        clueActivity.setClueId(id);
+        List<ClueActivity> activities = clueActivityMapper.select(clueActivity);
+        //创建集合保存数据
+        List<Activity> activityList = new ArrayList<>();
+        for (ClueActivity activity : activities) {
+            //根据外键查询市场活动信息
+            Activity activity1 = activityMapper.selectByPrimaryKey(activity.getActivityId());
+            //查询所有者信息
+            User user = userMapper.selectByPrimaryKey(activity1.getOwner());
+            activity1.setOwner(user.getName());
+            activityList.add(activity1);
+        }
+        return activityList;
+    }
+
+    //查询市场活动
+    @Override
+    public List<Activity> selectActivity(String id, String name) {
+            ClueActivity clueActivity = new ClueActivity();
+            clueActivity.setClueId(id);
+            List<ClueActivity> clueActivities = clueActivityMapper.select(clueActivity);
+            //保存数据
+            List<String> activities = new ArrayList<>();
+            for (ClueActivity activity : clueActivities) {
+                activities.add(activity.getActivityId());
+            }
+            Example example = new Example(Activity.class);
+            Example.Criteria criteria = example.createCriteria();
+            if (StrUtil.isNotEmpty(name)){
+                criteria.andLike("name","%" + name + "%");
+            }
+            criteria.andNotIn("id",activities);
+            List<Activity> activities1 = activityMapper.selectByExample(example);
+            for (Activity activity : activities1) {
+            User user = userMapper.selectByPrimaryKey(activity.getOwner());
+            activity.setOwner(user.getName());
+            }
+            return activities1;
+    }
+    //关联市场活动
+    @Override
+    public ResultVo addClueActivitys(String id, String ids) {
+        String[] idss = ids.split(",");
+        List<String> asList = Arrays.asList(idss);
+        for (String s : asList) {
+            ClueActivity clueActivity = new ClueActivity();
+            clueActivity.setId(UUIDUtil.getUUID());
+            clueActivity.setClueId(id);
+            clueActivity.setActivityId(s);
+            int count = clueActivityMapper.insertSelective(clueActivity);
+            if (count==0){
+                throw new CrmException(CrmEnum.ClueActivity__add_insert);
+            }
+        }
+        //查询已经关联的市场活动
+//        List<Activity> activityList = selectClueActivity(id);
+        ResultVo resultVo = new ResultVo();
+        resultVo.setOk(true);
+        resultVo.setMessage("关联市场活动成功!");
+        //resultVo.setT(activityList);
+        return resultVo;
+    }
+
+    //解除关联市场活动
+    @Override
+    public ResultVo deleteClueActivity(String activityId,String clueId) {
+        ResultVo resultVo = new ResultVo();
+        ClueActivity clueActivity = new ClueActivity();
+        clueActivity.setActivityId(activityId);
+        clueActivity.setClueId(clueId);
+        List<ClueActivity> select = clueActivityMapper.select(clueActivity);
+        for (ClueActivity activity : select) {
+            int count = clueActivityMapper.deleteByPrimaryKey(activity.getId());
+            if (count == 0){
+                throw new CrmException(CrmEnum.ClueActivity__delete_delete);
+            }
+        }
+        resultVo.setOk(true);
+        resultVo.setMessage("解除关联市场活动成功!");
         return resultVo;
     }
 }

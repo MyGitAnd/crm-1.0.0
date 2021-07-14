@@ -202,7 +202,7 @@
 				 -->
 				<a href="dept/index.html">部门管理</a>
 				<br>
-				<a href="qx/index.html">权限管理</a>
+				<a href="qx/index.jsp">权限管理</a>
 			</div>
 			
 			<div style="position: relative; width: 33%; height: 50%; left: 33%; top: -100%">
@@ -238,7 +238,7 @@
 			<div style="position: relative; width: 34%; height: 50%; left: 66%; top: -200%">
 				数据管理
 				<br><br>
-				<a href="dictionary/index.html">数据字典表</a>
+				<a href="<%=basePath%>/toView/settings/dictionary/index">数据字典表</a>
 				<br>
 				<a href="javascript:void(0);">导入</a>
 				<br>

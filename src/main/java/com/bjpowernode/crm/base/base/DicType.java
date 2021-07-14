@@ -4,6 +4,7 @@ import tk.mybatis.mapper.annotation.NameStyle;
 import tk.mybatis.mapper.code.Style;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.List;
 
 @Data
@@ -13,6 +14,8 @@ public class DicType {
 
     @Id
     private String code;
+    @Transient//数据库没有这个字段
+    private int id;
     private String name;
     private String description;
 

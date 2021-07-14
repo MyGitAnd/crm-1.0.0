@@ -6,6 +6,7 @@ import tk.mybatis.mapper.code.Style;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Data
 @Table(name = "tbl_dic_value")
@@ -13,6 +14,8 @@ import javax.persistence.Table;
 public class DicValue {
     @Id
     private String id;
+    @Transient
+    private Integer id2;
     private String value;
     private String text;
     private String orderNo;
