@@ -1,6 +1,10 @@
 package com.bjpowernode.crm.workbench.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
+import cn.hutool.poi.excel.StyleSet;
 import com.bjpowernode.crm.base.base.ResultVo;
 import com.bjpowernode.crm.base.exception.CrmEnum;
 import com.bjpowernode.crm.base.exception.CrmException;
@@ -9,12 +13,16 @@ import com.bjpowernode.crm.base.utils.UUIDUtil;
 import com.bjpowernode.crm.workbench.base.Activity;
 import com.bjpowernode.crm.workbench.base.ActivityRemark;
 import com.bjpowernode.crm.settings.bean.User;
+import com.bjpowernode.crm.workbench.base.ClueRemark;
 import com.bjpowernode.crm.workbench.mapper.ActivityMapper;
 import com.bjpowernode.crm.workbench.mapper.ActivityRemarkMapper;
 import com.bjpowernode.crm.settings.mapper.UserMapper;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -238,4 +246,57 @@ public class ActivityServiceImpl implements ActivityService {
 
         return resultVo;
     }
+
+    //导出报表
+    @Override
+    public ExcelWriter exportExcel() {
+        // 通过工具类创建writer，默认创建xls格式
+        ExcelWriter writer = ExcelUtil.getWriter();
+        // 一次性写出内容，使用默认样式，强制输出标题
+        List<Activity> activityList = activityMapper.selectAll();
+        for (Activity activity : activityList) {
+            //备注
+            ActivityRemark activityRemark = new ActivityRemark();
+            activityRemark.setActivityId(activity.getId());
+            List<ActivityRemark> remarks = activityRemarkMapper.select(activityRemark);
+            activity.setActivityRemarks(remarks);
+        }
+        writer.merge(Activity.index - 1,"市场活动报表");
+        //设置字体颜色
+        StyleSet styleSet = writer.getStyleSet();
+        //自定义标题别名
+        writer.addHeaderAlias("activityRemarks", "备注");
+        writer.addHeaderAlias("id", "编号");
+        writer.addHeaderAlias("owner", "所有者");
+        writer.addHeaderAlias("name", "市场活动名称");
+        writer.addHeaderAlias("startDate", "开始时间");
+        writer.addHeaderAlias("endDate", "结束时间");
+        writer.addHeaderAlias("cost", "花费");
+        writer.addHeaderAlias("description", "描述");
+        writer.addHeaderAlias("createTime", "创建时间");
+        writer.addHeaderAlias("createBy", "创建人");
+        writer.addHeaderAlias("editTime", "修改时间");
+        writer.addHeaderAlias("editBy", "修改人");
+
+        //CellStyle cellStyle = styleSet.getHeadCellStyle();
+        //设置内容字体
+        //设置内容字体
+       /* Font font = excelWriter.createFont();
+        font.setBold(true);
+        font.setColor(Font.COLOR_RED);
+        font.setItalic(true);
+        cellStyle.setFont(font);
+        styleSet.setBackgroundColor(IndexedColors.BLUE_GREY, false);*/
+
+        writer.write(activityList, true);
+        return writer;
+    }
+
+
+    //导入
+    public void exportExcel1(){
+        ExcelReader reader = ExcelUtil.getReader("d:/aaa.xlsx");
+        List<Activity> all = reader.readAll(Activity.class);
+    }
+
 }

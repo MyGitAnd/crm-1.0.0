@@ -5,6 +5,7 @@ import tk.mybatis.mapper.annotation.NameStyle;
 import tk.mybatis.mapper.code.Style;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.List;
 
 @Data
@@ -35,4 +36,7 @@ public class Clue {
 
     private List<ClueRemark> clueRemarks;
 
+    //属性的个数
+    @Transient
+    public static final Integer index = 21;
 }

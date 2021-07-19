@@ -20,7 +20,7 @@
 <script type="text/javascript" src="<%=basePath%>/jquery/bs_pagination/en.js"></script>
 <script type="text/javascript" src="<%=basePath%>/jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>/jquery/layui/layui.js"></script>
- <script type="text/javascript">
+<script type="text/javascript">
 
 
 	$(function(){
@@ -256,7 +256,8 @@
 				  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCustomerModal"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" id="editCustomer"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger" id="deleteCustomer"><span class="glyphicon glyphicon-minus"></span> 删除</button>
-				</div>
+                  <button type="button" class="btn btn-success" id="exportExcel"><span class="glyphicon glyphicon-circle-arrow-down"></span> 导出报表</button>
+                </div>
 				
 			</div>
 			<div style="position: relative;top: 10px;">
@@ -570,6 +571,13 @@
             layer.alert("请至少选择一条记录!", {
                 icon: 5});
         }
+    });
+
+    //导出报表
+    $("#exportExcel").click(function () {
+
+        window.location.href = "<%=basePath%>/workbench/Customer/exportExcel";
+
     });
 
 

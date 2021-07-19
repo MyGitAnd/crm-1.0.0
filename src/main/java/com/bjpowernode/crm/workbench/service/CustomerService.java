@@ -1,9 +1,12 @@
 package com.bjpowernode.crm.workbench.service;
 
+import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.ResultVo;
+import com.bjpowernode.crm.workbench.base.Contacts;
 import com.bjpowernode.crm.workbench.base.Customer;
 import com.bjpowernode.crm.workbench.base.CustomerRemark;
 import com.bjpowernode.crm.settings.bean.User;
+import com.bjpowernode.crm.workbench.base.Transaction;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -31,4 +34,16 @@ public interface CustomerService {
 
     ResultVo delete(String id);
 
+    List<Transaction> selectCustTran();
+
+    ResultVo deleteContactsTran(String id);
+
+    List<Contacts> selectContactsCustomer();
+
+
+    ResultVo deleteContacts(String id);
+
+    ResultVo addContactsCustomer(Contacts contacts, User user);
+
+    ExcelWriter exportExcel();
 }

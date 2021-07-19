@@ -6,23 +6,17 @@
 %>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-
-    <link href="<%=basePath%>/jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
-    <link href="<%=basePath%>/jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css"
-          type="text/css" rel="stylesheet"/>
-
-    <script type="text/javascript" src="<%=basePath%>/jquery/jquery-1.11.1-min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>/jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript"
-            src="<%=basePath%>/jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript"
-            src="<%=basePath%>/jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script type="text/javascript" src="<%=basePath%>/jquery/bs_pagination/en.js"></script>
-    <script type="text/javascript" src="<%=basePath%>/jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>/jquery/layui/layui.js"></script>
-    <script type="text/javascript">
+<head><meta charset="UTF-8">
+<link href="<%=basePath%>/jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+<link href="<%=basePath%>/jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="<%=basePath%>/jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/bs_pagination/en.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/layui/layui.js"></script>
+<script type="text/javascript">
 
         //默认情况下取消和保存按钮是隐藏的
         var cancelAndSaveBtnDefault = true;
@@ -261,7 +255,7 @@
         </h3>
     </div>
     <div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
-        <button type="button" class="btn btn-default" onclick="window.location.href='convert.html';"><span
+        <button type="button" class="btn btn-default" onclick="window.location.href='<%=basePath%>/toView/workbench/clue/convert?id=${requestScope.id}';"><span
                 class="glyphicon glyphicon-retweet"></span> 转换
         </button>
         <button type="button" class="btn btn-default" id="edit-Clue" data-toggle="modal" data-target="#editClueModal">
@@ -469,42 +463,46 @@
 </html>
 <script>
 
-    //查询关联的市场活动
-    $.ajax({
-        url: "<%=basePath%>/workbench/clueActivity/selectClueActivity",
-        type: "post",
-        data: {
-            'id': '${requestScope.id}'
-        },
-        dataType: "json",
-        success: function (data) {
-            for (var i = 0; i < data.length; i++) {
-                $("#clueTbody").append(" <tr>\n" +
-                    "                    <td>" + data[i].name + "</td>\n" +
-                    "                    <td>" + data[i].startDate + "</td>\n" +
-                    "                    <td>" + data[i].endDate + "</td>\n" +
-                    "                    <td>" + data[i].owner + "</td>\n" +
-                    "                    <td><a href=\"javascript:void(0);\" onclick=\"deleteClueActivity('" + data[i].id + "')\" style=\"text-decoration: none;\"><span\n" +
-                    "                           class=\"glyphicon glyphicon-remove\"></span>解除关联</a></td>\n" +
-                    "                </tr>")
-            }
-        }
-    });
+    select();
 
+    //查询关联的市场活动
+  function select(){
+      $("#clueTbody").text("");
+      $.ajax({
+          url: "<%=basePath%>/workbench/clueActivity/selectClueActivity",
+          type: "post",
+          data: {
+              'id': '${requestScope.id}'
+          },
+          dataType: "json",
+          success: function (data) {
+              for (var i = 0; i < data.length; i++) {
+                  $("#clueTbody").append(" <tr>\n" +
+                      "                    <td>" + data[i].name + "</td>\n" +
+                      "                    <td>" + data[i].startDate + "</td>\n" +
+                      "                    <td>" + data[i].endDate + "</td>\n" +
+                      "                    <td>" + data[i].owner + "</td>\n" +
+                      "                    <td><a href=\"javascript:void(0);\" onclick=\"deleteClueActivity('" + data[i].id + "')\" style=\"text-decoration: none;\"><span\n" +
+                      "                           class=\"glyphicon glyphicon-remove\"></span>解除关联</a></td>\n" +
+                      "                </tr>")
+              }
+          }
+      });
+  }
     //关联市场活动信息
     $("#selectBindModal").click(function () {
-        $("#likeClue").click(function () {
-            $.ajax({
-                url: "<%=basePath%>/workbench/clueActivity/selectActivity",
-                data: {
-                    'id': '${requestScope.id}',
-                    'name': $("#name").val()
-                },
-                type: "post",
-                dataType: "json",
-                success: function (data) {
-                    refresh(data)
-                }
+            $("#likeClue").click(function () {
+                $.ajax({
+                    url: "<%=basePath%>/workbench/clueActivity/selectActivity",
+                    data: {
+                        'id': '${requestScope.id}',
+                        'name': $("#name").val()
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        refresh(data)
+                    }
             })
         });
         $("#name").keypress(function (ele) {
@@ -571,7 +569,7 @@
                             skin: 'layer-ext-demo'
                         });
                         //刷新当前页面
-                        window.location.reload();
+                        select();
                     } else {
                         layer.alert(data.message, {
                             icon: 5,
@@ -604,7 +602,7 @@
                             skin: 'layer-ext-demo'
                         });
                         //刷新当前页面
-                        window.location.reload();
+                        select()
                     } else {
                         layer.alert(data.message, {
                             icon: 5,

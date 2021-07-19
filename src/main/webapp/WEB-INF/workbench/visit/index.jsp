@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+
@@ -74,10 +75,10 @@
 				    <div class="input-group">
 				      <div class="input-group-addon">所有者</div>
 					  <select class="form-control">
-					  	<option></option>
-					    <option>zhangsan</option>
-					    <option>lisi</option>
-					    <option>wangwu</option>
+                          <option value="">请选择</option>
+                          <c:forEach var="user" items="${applicationScope.users}">
+                              <option value="${user.id}">${user.name}</option>
+                          </c:forEach>
 					  </select>
 				    </div>
 				  </div>
@@ -109,12 +110,10 @@
 				    <div class="input-group">
 				      <div class="input-group-addon">状态</div>
 					  <select class="form-control">
-					  	<option></option>
-					    <option>未启动</option>
-					    <option>推迟</option>
-					    <option>进行中</option>
-					    <option>完成</option>
-					    <option>等待某人</option>
+                          <option value="">请选择</option>
+                          <c:forEach items="${applicationScope.dics['clueState']}" var="dicValue">
+                              <option value="${dicValue.value}">${dicValue.text}</option>
+                          </c:forEach>
 					  </select>
 				    </div>
 				  </div>
@@ -139,9 +138,9 @@
 			</div>
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
-				  <button type="button" class="btn btn-primary" onclick="window.location.href='saveTask.html';"><span class="glyphicon glyphicon-plus"></span> 任务</button>
+				  <button type="button" class="btn btn-primary" onclick="window.location.href='<%=basePath%>/toView/workbench/visit/saveTask';"><span class="glyphicon glyphicon-plus"></span> 任务</button>
 				  <button type="button" class="btn btn-default" onclick="alert('可以自行实现对通话的管理');"><span class="glyphicon glyphicon-plus"></span> 通话</button>
-				  <button type="button" class="btn btn-default" onclick="window.location.href='editTask.html';"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+				  <button type="button" class="btn btn-default" onclick="window.location.href='<%=basePath%>/toView/workbench/visit/editTask';"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
 				

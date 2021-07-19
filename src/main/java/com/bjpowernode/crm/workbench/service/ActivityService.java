@@ -1,5 +1,6 @@
 package com.bjpowernode.crm.workbench.service;
 
+import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.ResultVo;
 import com.bjpowernode.crm.workbench.base.Activity;
 import com.bjpowernode.crm.workbench.base.ActivityRemark;
@@ -29,4 +30,6 @@ public interface ActivityService {
     ResultVo updateRemark(ActivityRemark activityRemark, User user);
 
     ResultVo deleteRemark(String id);
+
+    ExcelWriter exportExcel();
 }

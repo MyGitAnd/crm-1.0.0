@@ -6,6 +6,7 @@ import tk.mybatis.mapper.code.Style;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.List;
 
 @Data
@@ -27,4 +28,7 @@ public class Activity {
 
     List<ActivityRemark> activityRemarks;//市场活动对应的备注集合
 
+    //属性的个数
+    @Transient
+    public static final Integer index = 12;
 }

@@ -47,4 +47,18 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
+
+    <!--登录拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--拦截请求的url地址-->
+            <mvc:mapping path="/**"/>
+            <!--那些不拦截-->
+            <mvc:exclude-mapping path="/jquery/**"/>
+            <mvc:exclude-mapping path="/image/**"/>
+            <mvc:exclude-mapping path="/settings/user/login"/>
+            <!--拦截器地址-->
+            <bean class="com.bjpowernode.crm.base.inteceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

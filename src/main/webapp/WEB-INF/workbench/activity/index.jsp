@@ -213,6 +213,7 @@
 				  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createActivityModal"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" data-toggle="modal" onclick="openEditModal()"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger" id="deletes"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				  <button type="button" class="btn btn-success" id="exportExcel"><span class="glyphicon glyphicon-circle-arrow-down"></span> 导出报表</button>
 				</div>
 				
 			</div>
@@ -587,6 +588,28 @@
         }
     });
 
+
+        //导出报表
+    $("#exportExcel").click(function () {
+
+        window.location.href = "<%=basePath%>/workbench/Activity/exportExcel";
+
+        //用不了
+        <%--$.ajax({--%>
+            <%--url:"<%=basePath%>/workbench/Activity/exportExcel",--%>
+            <%--type:"get",--%>
+            <%--dataType:"json",--%>
+            <%--success:function (data) {--%>
+                <%--if (data.ok){--%>
+                    <%--layer.alert(data.message, {--%>
+                        <%--icon: 6,--%>
+                        <%--skin: 'layer-ext-demo'--%>
+                    <%--});--%>
+             <%--}--%>
+            <%--}--%>
+        <%--})--%>
+
+    });
 
 
 </script>

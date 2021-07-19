@@ -8,12 +8,11 @@ import com.bjpowernode.crm.settings.bean.User;
 import com.bjpowernode.crm.settings.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class CrmCache {
@@ -37,6 +36,23 @@ public class CrmCache {
         List<User> users = userMapper.selectAll();
         servletContext.setAttribute("users",users);
 
+
+        //缓冲阶段和可能性 Map<String,String>
+        /**
+         * 1、包分隔使用.
+         * 2、文件后缀名不用加，特指只读.properties文件
+         */
+        ResourceBundle bundle = ResourceBundle.getBundle("mybatis.Stage2Possibility");
+        Enumeration<String> bundleKeys = bundle.getKeys();
+        Map<String,String> keys = new TreeMap<>();
+        while (bundleKeys.hasMoreElements()){
+            String key = bundleKeys.nextElement();
+            String value = bundle.getString(key);
+            keys.put(key,value);
+        }
+        servletContext.setAttribute("stage2Possibility",keys);
+
+
         //Map的方式
         List<DicType> dicTypes = dicTypeMapper.selectAll();
         Map<String,List<DicValue>> dics = new HashMap<>();
@@ -44,8 +60,10 @@ public class CrmCache {
             String code = dicType.getCode();
 
             DicValue dicValue = new DicValue();
-            dicValue.setTypeCode(code);
-            List<DicValue> select = dicValueMapper.select(dicValue);
+            Example example = new Example(DicValue.class);
+            example.setOrderByClause("orderNo");
+            example.createCriteria().andEqualTo("typeCode",code);
+            List<DicValue> select = dicValueMapper.selectByExample(example);
             dics.put(code,select);
         }
         servletContext.setAttribute("dics",dics);

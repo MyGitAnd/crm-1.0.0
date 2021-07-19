@@ -1,9 +1,12 @@
 package com.bjpowernode.crm.workbench.controller;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.ResultVo;
 import com.bjpowernode.crm.workbench.base.Activity;
 import com.bjpowernode.crm.workbench.base.Clue;
 import com.bjpowernode.crm.settings.bean.User;
 import com.bjpowernode.crm.workbench.base.ClueRemark;
+import com.bjpowernode.crm.workbench.base.Transaction;
 import com.bjpowernode.crm.workbench.service.ClueService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -132,5 +137,53 @@ public class ClueController {
         return resultVo;
     }
 
+
+    //查询信息
+    @RequestMapping("/workbench/clue/selectConvent")
+    @ResponseBody
+    public Clue selectConvent(String id){
+        return clueService.selectConvent(id);
+    }
+
+    //查询关联的市场活动
+    @RequestMapping("/workbench/clueActivity/selectActivity01")
+    @ResponseBody
+    public List<Activity> selectActivity01(String id,String name){
+
+        return clueService.selectActivity01(id,name);
+    }
+
+    //转换
+    @RequestMapping("/workbench/clueActivity/transfer")
+    @ResponseBody
+    public ResultVo transfer(HttpSession session, String isTran, Transaction transaction,String id){
+        User user = (User) session.getAttribute("user");
+
+        return clueService.transfer(user,isTran,transaction,id);
+    }
+
+    //导出报表
+    @RequestMapping("/workbench/Clue/exportExcel")
+    @ResponseBody
+    public void exportExcel(HttpServletResponse response){
+        ExcelWriter excelWriter = null;
+        ServletOutputStream out = null;
+        try {
+            excelWriter = clueService.exportExcel();
+            //response为HttpServletResponse对象
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            //test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
+            response.setHeader("Content-Disposition","attachment;filename=Clue.xls");
+            out = response.getOutputStream();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            excelWriter.flush(out, true);
+            // 关闭writer，释放内存
+            excelWriter.close();
+            //此处记得关闭输出Servlet流
+            IoUtil.close(out);
+        }
+    }
 
 }

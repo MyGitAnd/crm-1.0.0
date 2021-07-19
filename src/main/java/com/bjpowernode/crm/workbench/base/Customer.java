@@ -6,6 +6,7 @@ import tk.mybatis.mapper.code.Style;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.List;
 
 @Data
@@ -28,4 +29,7 @@ public class Customer {
     private String address;//地址
 
     private  List<CustomerRemark> customerRemarks;//客户对应的备注信息
+
+    @Transient
+    public static final Integer index = 14;
 }

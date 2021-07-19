@@ -1,10 +1,12 @@
 package com.bjpowernode.crm.workbench.service;
 
+import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.ResultVo;
 import com.bjpowernode.crm.workbench.base.Activity;
 import com.bjpowernode.crm.workbench.base.Clue;
 import com.bjpowernode.crm.settings.bean.User;
 import com.bjpowernode.crm.workbench.base.ClueRemark;
+import com.bjpowernode.crm.workbench.base.Transaction;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -36,4 +38,11 @@ public interface ClueService {
 
     ResultVo deleteClueActivity(String activityId,String clueId);
 
+    Clue selectConvent(String id);
+
+    List<Activity> selectActivity01(String id, String name);
+
+    ResultVo transfer(User user, String isTran, Transaction transaction, String id);
+
+    ExcelWriter exportExcel();
 }

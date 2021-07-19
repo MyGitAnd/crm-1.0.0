@@ -394,7 +394,9 @@
 				  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createClueModal"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" onclick="updateClue()"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" id="deleteClue" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
-				</div>
+                  <button type="button" class="btn btn-success" id="exportExcel"><span class="glyphicon glyphicon-circle-arrow-down"></span> 导出报表</button>
+
+                </div>
 				
 				
 			</div>
@@ -690,9 +692,18 @@
                     }
                 });
             })
+        }else {
+            layer.alert("至少选择一条记录进行删除!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
         }
     });
+    //导出报表
+    $("#exportExcel").click(function () {
 
+        window.location.href = "<%=basePath%>/workbench/Clue/exportExcel";
+    });
 
 </script>
 

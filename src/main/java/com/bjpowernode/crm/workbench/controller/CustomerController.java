@@ -1,9 +1,13 @@
 package com.bjpowernode.crm.workbench.controller;
 
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.ResultVo;
+import com.bjpowernode.crm.workbench.base.Contacts;
 import com.bjpowernode.crm.workbench.base.Customer;
 import com.bjpowernode.crm.workbench.base.CustomerRemark;
 import com.bjpowernode.crm.settings.bean.User;
+import com.bjpowernode.crm.workbench.base.Transaction;
 import com.bjpowernode.crm.workbench.service.CustomerService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -121,6 +127,70 @@ public class CustomerController {
         return resultVo;
     }
 
+    //查询交易
+    @RequestMapping("/workbench/CustomerTran/selectCustTran")
+    @ResponseBody
+    public List<Transaction> selectCustTran(){
+
+        return customerService.selectCustTran();
+    }
+
+    //删除交易
+    @RequestMapping("/workbench/contactsTran/deleteContactsTran")
+    @ResponseBody
+    public ResultVo deleteContactsTran(String id){
+
+        return customerService.deleteContactsTran(id);
+    }
+
+    //查询联系人
+    @RequestMapping("/workbench/ContactsCust/selectContactsCustomer")
+    @ResponseBody
+    public List<Contacts> selectContactsCustomer(){
+
+        return customerService.selectContactsCustomer();
+    }
+
+    //删除联系人
+    @RequestMapping("/workbench/customerContacts/deleteContacts")
+    @ResponseBody
+    public ResultVo deleteContacts(String id){
+
+        return customerService.deleteContacts(id);
+    }
+
+    //添加联系人
+    @RequestMapping("/workbench/ContactsCustomer/addContactsCustomer")
+    @ResponseBody
+    public ResultVo addContactsCustomer(Contacts contacts,HttpSession session){
+        User user = (User) session.getAttribute("user");
+        return customerService.addContactsCustomer(contacts,user);
+    }
+
+    //导出报表
+    @RequestMapping("/workbench/Customer/exportExcel")
+    @ResponseBody
+    public void exportExcel(HttpServletResponse response){
+        ExcelWriter excelWriter = null;
+        ServletOutputStream out = null;
+        try {
+            excelWriter = customerService.exportExcel();
+            //response为HttpServletResponse对象
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            //test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
+            response.setHeader("Content-Disposition","attachment;filename=Customer.xls");
+            out = response.getOutputStream();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            excelWriter.flush(out, true);
+            // 关闭writer，释放内存
+            excelWriter.close();
+            //此处记得关闭输出Servlet流
+            IoUtil.close(out);
+        }
+
+    }
 
 
 }

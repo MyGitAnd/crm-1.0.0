@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+
@@ -15,8 +16,9 @@
 <script type="text/javascript" src="<%=basePath%>/jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>/jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="<%=basePath%>/jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script type="text/javascript" src="<%=basePath%>/jquery/bs_pagination/en.js"></script>
-    <script type="text/javascript" src="<%=basePath%>/jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/bs_pagination/en.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/layui/layui.js"></script>
 <script type="text/javascript">
 
 	$(function(){
@@ -49,21 +51,21 @@
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" id="owner" type="text">
 				    </div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">名称</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" name="name" type="text">
 				    </div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">客户名称</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" id="customerId" type="text">
 				    </div>
 				  </div>
 				  
@@ -72,17 +74,11 @@
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">阶段</div>
-					  <select class="form-control">
-					  	<option></option>
-					  	<option>资质审查</option>
-					  	<option>需求分析</option>
-					  	<option>价值建议</option>
-					  	<option>确定决策者</option>
-					  	<option>提案/报价</option>
-					  	<option>谈判/复审</option>
-					  	<option>成交</option>
-					  	<option>丢失的线索</option>
-					  	<option>因竞争丢失关闭</option>
+					  <select class="form-control" id="stage">
+                          <option>请选择</option>
+                          <c:forEach items="${applicationScope.dics['stage']}" var="stage">
+                              <option value="${stage.value}">${stage.text}</option>
+                          </c:forEach>
 					  </select>
 				    </div>
 				  </div>
@@ -90,10 +86,11 @@
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">类型</div>
-					  <select class="form-control">
-					  	<option></option>
-					  	<option>已有业务</option>
-					  	<option>新业务</option>
+					  <select class="form-control" id="transactionType">
+					  	<option>请选择</option>
+                          <c:forEach items="${applicationScope.dics['transactionType']}" var="transactionType">
+                              <option value="${transactionType.value}">${transactionType.text}</option>
+                          </c:forEach>
 					  </select>
 				    </div>
 				  </div>
@@ -102,21 +99,10 @@
 				    <div class="input-group">
 				      <div class="input-group-addon">来源</div>
 				      <select class="form-control" id="create-clueSource">
-						  <option></option>
-						  <option>广告</option>
-						  <option>推销电话</option>
-						  <option>员工介绍</option>
-						  <option>外部介绍</option>
-						  <option>在线商场</option>
-						  <option>合作伙伴</option>
-						  <option>公开媒介</option>
-						  <option>销售邮件</option>
-						  <option>合作伙伴研讨会</option>
-						  <option>内部研讨会</option>
-						  <option>交易会</option>
-						  <option>web下载</option>
-						  <option>web调研</option>
-						  <option>聊天</option>
+                          <option>请选择</option>
+                          <c:forEach items="${applicationScope.dics['source']}" var="source">
+                              <option value="${source.value}">${source.text}</option>
+                          </c:forEach>
 						</select>
 				    </div>
 				  </div>
@@ -124,19 +110,20 @@
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">联系人名称</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" id="contactsId" type="text">
 				    </div>
 				  </div>
 				  
-				  <button type="submit" class="btn btn-default">查询</button>
+				  <button type="button" id="select" class="btn btn-default">查询</button>
 				  
 				</form>
 			</div>
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 10px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
-				  <button type="button" class="btn btn-primary" onclick="window.location.href='save.jsp';"><span class="glyphicon glyphicon-plus"></span> 创建</button>
-				  <button type="button" class="btn btn-default" onclick="window.location.href='edit.jsp';"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
-				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				  <button type="button" class="btn btn-primary" onclick="window.location.href='<%=basePath%>/toView/workbench/transaction/save';"><span class="glyphicon glyphicon-plus"></span> 创建</button>
+				  <button type="button" class="btn btn-default" id="update"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+				  <button type="button" class="btn btn-danger" id="deleteTran"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+                    <button type="button" class="btn btn-success" id="exportExcel"><span class="glyphicon glyphicon-circle-arrow-down"></span> 导出报表</button>
 				</div>
 				
 				
@@ -145,7 +132,7 @@
 				<table class="table table-hover">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td><input type="checkbox" /></td>
+							<td><input type="checkbox" id="father" /></td>
 							<td>名称</td>
 							<td>客户名称</td>
 							<td>阶段</td>
@@ -196,7 +183,14 @@
             dataType:"json",
             data:{
                 'currentPage': page,
-                'rowsPerPage': pageSize
+                'rowsPerPage': pageSize,
+                'owner':$("#owner").val(),
+                'name':$("#name").val(),
+                'customerId':$("#customerId").val(),
+                'stage':$("#stage").val(),
+                'type':$("#transactionType").val(),
+                'source':$("#create-clueSource").val(),
+                'contactsId':$("#contactsId").val()
             },
             success:function (data) {
                 //分页查询的时候选中的复选框要清除掉
@@ -206,14 +200,14 @@
                 for (var i = 0;i < transactions.length;i++){
                     var transaction = transactions[i];
                     $("#tbody").append("<tr>\n" +
-                        "\t\t\t\t\t\t\t<td><input type=\"checkbox\" /></td>\n" +
-                        "\t\t\t\t\t\t\t<td><a style=\"text-decoration: none; cursor: pointer;\" onclick=\"window.location.href=detail.jsp\">"+transaction.name+"</a></td>\n" +
-                        "\t\t\t\t\t\t\t<td>"+transaction.contactsId+"</td>\n" +
+                        "\t\t\t\t\t\t\t<td><input type=\"checkbox\" onclick='checkeds()' class='sun' value='"+transaction.id+"' /></td>\n" +
+                        "\t\t\t\t\t\t\t<td><a style=\"text-decoration: none; cursor: pointer;\" onclick=\"window.location.href='<%=basePath%>/toView/workbench/transaction/detail?id="+transaction.id+"';\">"+transaction.name+"</a></td>\n" +
+                        "\t\t\t\t\t\t\t<td>"+transaction.customerId+"</td>\n" +
                         "\t\t\t\t\t\t\t<td>"+transaction.stage+"</td>\n" +
                         "\t\t\t\t\t\t\t<td>"+transaction.activityId+"</td>\n" +
                         "\t\t\t\t\t\t\t<td>"+transaction.owner+"</td>\n" +
-                        "\t\t\t\t\t\t\t<td>"+transaction.customerId+"</td>\n" +
-                        "\t\t\t\t\t\t\t<td>"+transaction.customerId+"</td>\n" +
+                        "\t\t\t\t\t\t\t<td>"+transaction.source+"</td>\n" +
+                        "\t\t\t\t\t\t\t<td>"+transaction.contactsId+"</td>\n" +
                         "\t\t\t\t\t\t</tr>")
                 }
                 //分页
@@ -239,10 +233,88 @@
         });
 
     }
+//模糊查询
+    $("#select").click(function () {
+       refresh(1,3);
+    });
+
+    //复选框
+    $("#father").click(function () {
+        $(".sun").prop("checked",$(this).prop("checked"));
+    });
+    function checkeds() {
+        //获取sun的个数
+        var length = $(".sun").length;
+        //获取勾中的个数
+        var checkedLength = $(".sun:checked").length;
+        if (length == checkedLength){
+            $("#father").prop("checked",true);
+        } else {
+            $("#father").prop("checked",false);
+        }
+
+    }
 
 
+    $("#update").click(function () {
 
+        var checkedLenth = $(".sun:checked").length;
+        if (checkedLenth > 1){
+            layer.alert("选择操作的数据不能超过一条!", {
+                icon: 5});
+        } else if (checkedLenth < 1){
+            layer.alert("请至少选择一条数据!", {
+                icon: 5});
+        } else {
+            $("#editClueModal").modal("show");
+            var id = $(".sun:checked")[0].value;
 
+        window.location.href='<%=basePath%>/toView/workbench/transaction/edit?id='+id;
+        }
+    });
 
+    $("#deleteTran").click(function () {
+        var checkedLength = $(".sun:checked").length;
+        if (checkedLength != 0){
+            layer.confirm('确定要删除'+checkedLength+'条记录吗？', {
+                btn : ['确定', '取消']
+                // 按钮
+            }, function() {
+                var ids = [];
+                $(".sun:checked").each(function () {
+                    ids.push($(this).val());
+                });
+                $.ajax({
+                    url:"<%=basePath%>/workbench/Tran/deletesTran",
+                    data:{
+                        'ids':ids.join()
+                    },
+                    dataType:"json",
+                    type:"get",
+                    success:function (data) {
+                        $('#father').removeAttr('checked');
+                        if (data.ok){
+                            layer.alert(data.message, {
+                                icon: 6,
+                                skin: 'layer-ext-demo'
+                            });
+                            refresh(1,3);
+                        }
+                    }
+                })
+            });
+        } else {
+            layer.alert("请至少选择一条数据！", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }
+    });
+    //导出报表
+    $("#exportExcel").click(function () {
+
+        window.location.href = "<%=basePath%>/workbench/Tran/exportExcel";
+
+        });
 
 </script>

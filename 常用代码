@@ -3,7 +3,7 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+
             request.getServerPort()+request.getContextPath();
 %>
-
+<%=basePath%>/toView/workbench/index
 $.ajax({
     url:"<%=basePath%>/",
     type:"post",
