@@ -300,13 +300,13 @@
 
             if (confirmPwd == "" && newPwd==""){
 
-                layer.alert("保存成功!", {
-                    icon: 6,
+                layer.alert("保存失败!", {
+                    icon: 4,
                     skin: 'layer-ext-demo'});
                 $.ajax({
                     url:"<%=basePath%>/setting/user/update",
                     data:{
-                        'img' : $('#photo').val(),
+                        'img' : $('#photo').val()
                     },
                     type: "post",
                     dataType:"json",

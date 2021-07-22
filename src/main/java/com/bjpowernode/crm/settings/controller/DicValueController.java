@@ -1,5 +1,7 @@
 package com.bjpowernode.crm.settings.controller;
 
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.DicValue;
 import com.bjpowernode.crm.base.base.ResultVo;
 import com.bjpowernode.crm.settings.service.DicValueService;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -50,5 +54,29 @@ public class DicValueController {
     @ResponseBody
     public ResultVo deleteDicValue(String ids){
         return dicValueService.deleteDicValue(ids);
+    }
+
+    //导出报表
+    @RequestMapping("/settings/Value/exportExcel")
+    @ResponseBody
+    public void exportExcel(HttpServletResponse response){
+        ExcelWriter excelWriter = null;
+        ServletOutputStream out = null;
+        try {
+            excelWriter = dicValueService.exportExcel();
+            //response为HttpServletResponse对象
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            //test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
+            response.setHeader("Content-Disposition","attachment;filename=DicValue.xls");
+            out = response.getOutputStream();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            excelWriter.flush(out, true);
+            // 关闭writer，释放内存
+            excelWriter.close();
+            //此处记得关闭输出Servlet流
+            IoUtil.close(out);
+        }
     }
 }

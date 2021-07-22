@@ -1,12 +1,15 @@
 package com.bjpowernode.crm.settings.service.impl;
 
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
+import cn.hutool.poi.excel.StyleSet;
 import com.bjpowernode.crm.base.base.DicType;
 import com.bjpowernode.crm.base.base.ResultVo;
 import com.bjpowernode.crm.base.exception.CrmEnum;
 import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.base.mapper.DicTypeMapper;
 import com.bjpowernode.crm.settings.service.DicTypeService;
-import com.bjpowernode.crm.workbench.base.ClueActivity;
+import com.bjpowernode.crm.workbench.base.Visit;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +82,22 @@ public class DicTypeServiceImpl implements DicTypeService {
         resultVo.setOk(true);
         resultVo.setMessage("删除信息成功!共删除【"+count+"】条记录!");
         return resultVo;
+    }
+    //导出报表
+    @Override
+    public ExcelWriter exportExcel() {
+        // 通过工具类创建writer，默认创建xls格式
+        ExcelWriter writer = ExcelUtil.getWriter();
+        // 一次性写出内容，使用默认样式，强制输出标题
+        List<DicType> dicTypes = dicTypeMapper.selectAll();
+
+        writer.merge(DicType.index + 1,"数据字典报表");
+
+        //设置字体颜色
+        StyleSet styleSet = writer.getStyleSet();
+
+
+        writer.write(dicTypes, true);
+        return writer;
     }
 }

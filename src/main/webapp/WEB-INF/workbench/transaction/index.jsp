@@ -123,7 +123,7 @@
 				  <button type="button" class="btn btn-primary" onclick="window.location.href='<%=basePath%>/toView/workbench/transaction/save';"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" id="update"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger" id="deleteTran"><span class="glyphicon glyphicon-minus"></span> 删除</button>
-                    <button type="button" class="btn btn-success" id="exportExcel"><span class="glyphicon glyphicon-circle-arrow-down"></span> 导出报表</button>
+                  <button type="button" class="btn btn-success" id="exportExcel"><span class="glyphicon glyphicon-circle-arrow-down"></span> 导出报表</button>
 				</div>
 				
 				

@@ -21,4 +21,6 @@ public class DicValue {
     private String orderNo;
     private String typeCode;
 
+    @Transient
+    public static final Integer index = 5;
 }

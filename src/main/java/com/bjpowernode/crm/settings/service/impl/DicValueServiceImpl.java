@@ -1,5 +1,8 @@
 package com.bjpowernode.crm.settings.service.impl;
 
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
+import cn.hutool.poi.excel.StyleSet;
 import com.bjpowernode.crm.base.base.DicValue;
 import com.bjpowernode.crm.base.base.ResultVo;
 import com.bjpowernode.crm.base.exception.CrmEnum;
@@ -7,6 +10,7 @@ import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.base.mapper.DicValueMapper;
 import com.bjpowernode.crm.base.utils.UUIDUtil;
 import com.bjpowernode.crm.settings.service.DicValueService;
+import com.bjpowernode.crm.workbench.base.Visit;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,5 +92,20 @@ public class DicValueServiceImpl implements DicValueService {
         resultVo.setMessage("删除成功!共删除【"+count+"】条数据!");
 
         return resultVo;
+    }
+    //导出报表
+    @Override
+    public ExcelWriter exportExcel() {
+        // 通过工具类创建writer，默认创建xls格式
+        ExcelWriter writer = ExcelUtil.getWriter();
+        // 一次性写出内容，使用默认样式，强制输出标题
+        List<DicValue> dicValues = dicValueMapper.selectAll();
+        writer.merge(DicValue.index - 1,"数据字典报表");
+
+        //设置字体颜色
+        StyleSet styleSet = writer.getStyleSet();
+
+        writer.write(dicValues, true);
+        return writer;
     }
 }

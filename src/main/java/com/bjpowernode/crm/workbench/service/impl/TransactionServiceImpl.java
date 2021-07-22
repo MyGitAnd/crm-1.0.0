@@ -558,7 +558,6 @@ public class TransactionServiceImpl implements TransactionService {
         //设置字体颜色
         StyleSet styleSet = writer.getStyleSet();
         //自定义标题别名
-        writer.addHeaderAlias("transactionRemarks", "备注");
         writer.addHeaderAlias("id", "编号");
         writer.addHeaderAlias("owner", "所有者");
         writer.addHeaderAlias("money", "金额");
@@ -578,6 +577,7 @@ public class TransactionServiceImpl implements TransactionService {
         writer.addHeaderAlias("description", "描述");
         writer.addHeaderAlias("contactSummary", "联系纪要");
         writer.addHeaderAlias("nextContactTime", "下次联系时间");
+        writer.addHeaderAlias("transactionRemarks", "备注列表");
 
         writer.write(transactions, true);
         return writer;

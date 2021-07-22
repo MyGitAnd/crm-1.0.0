@@ -335,7 +335,6 @@
                 dataType:"json",
                 type:"get",
                 success:function (data) {
-                    $('#father').removeAttr('checked');
                     if (data.ok) {
                         layer.alert(data.message, {
                             icon: 6,

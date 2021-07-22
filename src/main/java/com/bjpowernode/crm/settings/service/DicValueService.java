@@ -1,5 +1,6 @@
 package com.bjpowernode.crm.settings.service;
 
+import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.DicValue;
 import com.bjpowernode.crm.base.base.ResultVo;
 import com.github.pagehelper.PageInfo;
@@ -16,4 +17,8 @@ public interface DicValueService {
     DicValue selectValue(String id);
 
     ResultVo deleteDicValue(String ids);
+
+    ExcelWriter exportExcel();
+
+
 }

@@ -65,7 +65,14 @@ public enum CrmEnum {
     ContactsActivity__delete_delete("008-009","解除关联市场活动失败!"),
     CustomerTran__delete_delete("009-001","解除关联市场活动失败!"),
     CustomerContacts__delete_delete("009-002","删除联系人失败!"),
-    CustomerContacts__add_add("009-003","删除联系人失败!");
+    CustomerContacts__add_add("009-003","删除联系人失败!"),
+    Visit__Add_add("010-001","添加回访失败!"),
+    Visit__Update_Update("010-002","修改回访失败!"),
+    Visit__delete_delete("010-003","删除回访失败!"),
+    Visit__delete1_delete1("010-004","添加回访失败!"),
+    VisitRemark__add_add("010-005","添加备注失败!"),
+    VisitRemark__update_update("010-006","修改备注失败!"),
+    VisitRemark__delete_delete("010-007","修改备注失败!");
 
 
 

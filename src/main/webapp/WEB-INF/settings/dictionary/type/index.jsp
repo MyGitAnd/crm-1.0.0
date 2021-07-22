@@ -32,7 +32,8 @@
 		  <button type="button" class="btn btn-primary" onclick="window.location.href='<%=basePath%>/toView/settings/dictionary/type/save'"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 		  <button type="button" class="btn btn-default" id="editType"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
 		  <button type="button" class="btn btn-danger" id="deleteType"><span class="glyphicon glyphicon-minus"></span> 删除</button>
-		</div>
+          <button type="button" class="btn btn-success" id="exportExcel"><span class="glyphicon glyphicon-circle-arrow-down"></span> 导出报表</button>
+        </div>
 	</div>
 	<div style="position: relative; left: 30px; top: 20px;">
 		<table class="table table-hover">
@@ -221,6 +222,13 @@
                 });
             }
         });
+
+    //导出报表
+    $("#exportExcel").click(function () {
+
+        window.location.href = "<%=basePath%>/settings/Type/exportExcel";
+
+    });
 
 
 </script>

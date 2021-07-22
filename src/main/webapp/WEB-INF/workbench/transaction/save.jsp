@@ -298,6 +298,8 @@
         $("#create-activitySrc").val(text);
     });
 
+    //关联联系人
+
     $("#likeClue1").click(function () {
         $.ajax({
             url: "<%=basePath%>/workbench/clueActivity/selectAc1",
@@ -362,6 +364,7 @@
         }
     }
 
+    //添加
     function addTran() {
 
         $.ajax({

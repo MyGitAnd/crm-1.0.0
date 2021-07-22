@@ -433,7 +433,7 @@
                        //保存完毕后清空表单中的数据
                        $('#createActivityModal').on('hidden.bs.modal', function (){
                            document.getElementById("addActivityForm").reset();
-                       });
+                   });
                        if (data.ok){
                            layer.alert(data.message, {
                                icon: 6,

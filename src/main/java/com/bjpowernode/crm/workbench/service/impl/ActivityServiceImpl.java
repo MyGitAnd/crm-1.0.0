@@ -260,12 +260,14 @@ public class ActivityServiceImpl implements ActivityService {
             activityRemark.setActivityId(activity.getId());
             List<ActivityRemark> remarks = activityRemarkMapper.select(activityRemark);
             activity.setActivityRemarks(remarks);
+            //所有者
+            User user = userMapper.selectByPrimaryKey(activity.getOwner());
+            activity.setOwner(user.getName());
         }
         writer.merge(Activity.index - 1,"市场活动报表");
         //设置字体颜色
         StyleSet styleSet = writer.getStyleSet();
         //自定义标题别名
-        writer.addHeaderAlias("activityRemarks", "备注");
         writer.addHeaderAlias("id", "编号");
         writer.addHeaderAlias("owner", "所有者");
         writer.addHeaderAlias("name", "市场活动名称");
@@ -277,6 +279,7 @@ public class ActivityServiceImpl implements ActivityService {
         writer.addHeaderAlias("createBy", "创建人");
         writer.addHeaderAlias("editTime", "修改时间");
         writer.addHeaderAlias("editBy", "修改人");
+        writer.addHeaderAlias("activityRemarks", "备注列表");
 
         //CellStyle cellStyle = styleSet.getHeadCellStyle();
         //设置内容字体

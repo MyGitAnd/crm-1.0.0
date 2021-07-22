@@ -22,4 +22,7 @@ public class DicType {
 
     private List<DicValue> dicValues;
 
+    @Transient
+    public static final Integer index = 3;
+
 }

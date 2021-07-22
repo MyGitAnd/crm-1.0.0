@@ -555,7 +555,6 @@ public class ClueServiceImpl implements ClueService {
         //设置字体颜色
         StyleSet styleSet = writer.getStyleSet();
         //自定义标题别名
-        writer.addHeaderAlias("clueRemarks", "备注");
         writer.addHeaderAlias("id", "编号");
         writer.addHeaderAlias("owner", "所有者");
         writer.addHeaderAlias("fullname", "联系人全名");
@@ -576,6 +575,7 @@ public class ClueServiceImpl implements ClueService {
         writer.addHeaderAlias("contactSummary", "联系纪要");
         writer.addHeaderAlias("nextContactTime", "下次联系时间");
         writer.addHeaderAlias("address", "公司地址");
+        writer.addHeaderAlias("clueRemarks", "备注列表");
 
         writer.write(clues, true);
         return writer;
