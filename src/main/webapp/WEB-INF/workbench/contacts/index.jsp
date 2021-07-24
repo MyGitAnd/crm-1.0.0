@@ -550,31 +550,83 @@
 
     //添加
     $("#addContact").click(function () {
-        $.ajax({
-            url:"<%=basePath%>/workbench/Contacts/addContacts",
-            data:$("#ContactsFrom").serialize(),
-            type:"post",
-            dataType:"json",
-            success:function (data) {
-                //添加成功清空表单数据
-                $('#createContactsModal').on('hidden.bs.modal', function (){
-                    document.getElementById("ContactsFrom").reset();
-                });
-                if (data.ok){
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
+        if ($("#create-surname").val() == ""){
+            layer.alert("姓名不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-job").val() == ""){
+            layer.alert("职位不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#create-mphone").val() == ""){
+            layer.alert("手机不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#create-email").val() == ""){
+            layer.alert("邮箱不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#create-birth").val() == ""){
+            layer.alert("生日不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#create-customerName").val() == ""){
+            layer.alert("客户名称不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-describe").val() == ""){
+            layer.alert("描述不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-contactSummary1").val() == ""){
+            layer.alert("联系纪要不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-nextContactTime1").val() == ""){
+            layer.alert("下次联系时间不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-address").val() == ""){
+            layer.alert("详细地址不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else {
+            $.ajax({
+                url:"<%=basePath%>/workbench/Contacts/addContacts",
+                data:$("#ContactsFrom").serialize(),
+                type:"post",
+                dataType:"json",
+                success:function (data) {
+                    //添加成功清空表单数据
+                    $('#createContactsModal').on('hidden.bs.modal', function (){
+                        document.getElementById("ContactsFrom").reset();
                     });
-                    //添加成功刷新当前页面
-                    refresh(1,3);
-                } else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
+                    if (data.ok){
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //添加成功刷新当前页面
+                        refresh(1,3);
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
                 }
-            }
-        })
+            })
+        }
     });
 
     //设置全选和全不选
@@ -646,31 +698,84 @@
 
     //真正修改的方法
     $("#updateContacts").click(function () {
-        $.ajax({
-            url:"<%=basePath%>/workbench/Contacts/addContactsAndUpdate",
-            data:$("#ContactsFromUpdate").serialize(),
-            type:"post",
-            dataType:"json",
-            success:function (data) {
-                //添加成功清空表单数据
-                $('#createContactsModal').on('hidden.bs.modal', function (){
-                    document.getElementById("ContactsFrom").reset();
-                });
-                if (data.ok){
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
+        if ($("#edit-surname").val() == ""){
+            layer.alert("姓名不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#edit-job").val() == ""){
+            layer.alert("职位不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#edit-mphone").val() == ""){
+            layer.alert("手机不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#edit-email").val() == ""){
+            layer.alert("邮箱不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#edit-birth").val() == ""){
+            layer.alert("生日不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#edit-customerName").val() == ""){
+            layer.alert("客户名称不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }   else if ($("#edit-describe").val() == ""){
+            layer.alert("描述不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-contactSummary").val() == ""){
+            layer.alert("联系纪要不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-nextContactTime").val() == ""){
+            layer.alert("下次联系时间不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#edit-address2").val() == ""){
+            layer.alert("详细地址不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else {
+            $.ajax({
+                url:"<%=basePath%>/workbench/Contacts/addContactsAndUpdate",
+                data:$("#ContactsFromUpdate").serialize(),
+                type:"post",
+                dataType:"json",
+                success:function (data) {
+                    //添加成功清空表单数据
+                    $('#createContactsModal').on('hidden.bs.modal', function (){
+                        document.getElementById("ContactsFrom").reset();
                     });
-                    //添加成功刷新当前页面
-                    refresh(1,3);
-                } else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
+                    if (data.ok){
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //添加成功刷新当前页面
+                        refresh(1,3);
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
                 }
-            }
-        })
+            })
+        }
+
     });
 
 

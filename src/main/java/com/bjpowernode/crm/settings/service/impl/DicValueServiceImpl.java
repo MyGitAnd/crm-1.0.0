@@ -3,10 +3,12 @@ package com.bjpowernode.crm.settings.service.impl;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import cn.hutool.poi.excel.StyleSet;
+import com.bjpowernode.crm.base.base.DicType;
 import com.bjpowernode.crm.base.base.DicValue;
 import com.bjpowernode.crm.base.base.ResultVo;
 import com.bjpowernode.crm.base.exception.CrmEnum;
 import com.bjpowernode.crm.base.exception.CrmException;
+import com.bjpowernode.crm.base.mapper.DicTypeMapper;
 import com.bjpowernode.crm.base.mapper.DicValueMapper;
 import com.bjpowernode.crm.base.utils.UUIDUtil;
 import com.bjpowernode.crm.settings.service.DicValueService;
@@ -25,6 +27,9 @@ public class DicValueServiceImpl implements DicValueService {
 
     @Autowired
     private DicValueMapper dicValueMapper;
+
+    @Autowired
+    private DicTypeMapper dicTypeMapper;
     //查询
     @Override
     public PageInfo<DicValue> selectDicValue(Integer page,Integer pageSize) {
@@ -107,5 +112,12 @@ public class DicValueServiceImpl implements DicValueService {
 
         writer.write(dicValues, true);
         return writer;
+    }
+    //查询的方法
+    @Override
+    public List<DicType> typeValues() {
+
+        List<DicType> dicTypes = dicTypeMapper.selectAll();
+        return dicTypes;
     }
 }

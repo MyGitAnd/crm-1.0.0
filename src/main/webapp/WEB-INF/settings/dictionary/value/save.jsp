@@ -31,7 +31,6 @@
 			<label for="create-dicTypeCode" class="col-sm-2 control-label">字典类型编码<span style="font-size: 15px; color: red;">*</span></label>
 			<div class="col-sm-10" style="width: 300px;">
 				<select class="form-control" id="create-dicTypeCode" style="width: 200%;">
-
 				</select>
 			</div>
 		</div>
@@ -64,9 +63,9 @@
 <script>
 
     //查询字典类型的编码
-    $(function(){
+
         $.ajax({
-            url:"<%=basePath%>/settings/dictionary/types",
+            url:"<%=basePath%>/settings/dictionary/typeValues",
             type:"get",
             dataType:"json",
             success:function (data) {
@@ -74,36 +73,51 @@
                     $("#create-dicTypeCode").append("<option value='"+data[i].code+"'>"+data[i].name+"</option>");
                 }
             }
-        })
-    }) ;
+        });
 
     $("#addDicValue").click(function () {
-       $.ajax({
-           url:"<%=basePath%>/settings/dicValue/addDicValue",
-           data:{
-            'typeCode':$("#create-dicTypeCode").val(),
-               'value':$("#create-dicValue").val(),
-                'text':$("#create-text").val(),
-               'orderNo':$("#create-orderNo").val()
-           },
-           type:"post",
-           dataType:"json",
-           success:function (data) {
-               if (data.ok){
-                   layer.alert(data.message, {
-                       icon: 6,
-                       skin: 'layer-ext-demo'
-                   });
-                   //刷新上页面
-                   // window.opener.location.reload();
-               } else {
-                   layer.alert(data.message, {
-                       icon: 5,
-                       skin: 'layer-ext-demo'
-                   });
-               }
-           }
-       })
-
+         if ($("#create-dicValue").val() == ""){
+            layer.alert("字典值不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#create-text").val() == ""){
+            layer.alert("文本不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#create-orderNo").val() == ""){
+            layer.alert("排序号不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else {
+            $.ajax({
+                url:"<%=basePath%>/settings/dicValue/addDicValue",
+                data:{
+                    'typeCode':$("#create-dicTypeCode").val(),
+                    'value':$("#create-dicValue").val(),
+                    'text':$("#create-text").val(),
+                    'orderNo':$("#create-orderNo").val()
+                },
+                type:"post",
+                dataType:"json",
+                success:function (data) {
+                    if (data.ok){
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //刷新上页面
+                        // window.opener.location.reload();
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
+                }
+            })
+        }
     });
 </script>

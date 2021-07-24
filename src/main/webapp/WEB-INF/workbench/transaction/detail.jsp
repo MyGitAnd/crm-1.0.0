@@ -486,35 +486,42 @@
 
     //添加备注
     $("#saveRemark").click(function () {
-       $.ajax({
-           url:"<%=basePath%>/workbench/tranRemark/addRemark",
-           data:{
-               'noteContent':$("#remark").val(),
-               'tranId':'${requestScope.id}'
-           },
-           type:"post",
-           dataType:"json",
-           success:function (data) {
-               if (data.ok) {
-                   layer.alert(data.message, {
-                       icon: 6,
-                       skin: 'layer-ext-demo'
-                   });
-                   //刷新页面
-                   $("#remark").val("");
-                  var tranRemark = data.t;
-                  var tranRemarks = [];
-                   tranRemarks[0] = tranRemark;
-                   selectRemark(tranRemarks);
-               }else {
-                   layer.alert(data.message, {
-                       icon: 5,
-                       skin: 'layer-ext-demo'
-                   });
-               }
+        if ($("#remark").val() == "") {
+            layer.alert("添加备注信息不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else {
+            $.ajax({
+                url:"<%=basePath%>/workbench/tranRemark/addRemark",
+                data:{
+                    'noteContent':$("#remark").val(),
+                    'tranId':'${requestScope.id}'
+                },
+                type:"post",
+                dataType:"json",
+                success:function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //刷新页面
+                        $("#remark").val("");
+                        var tranRemark = data.t;
+                        var tranRemarks = [];
+                        tranRemarks[0] = tranRemark;
+                        selectRemark(tranRemarks);
+                    }else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
 
-           }
-       });
+                }
+            });
+        }
     });
 
     //修改备注
@@ -527,33 +534,39 @@
         }
 
         $("#updateRemarkBtn").click(function () {
-           $.ajax({
-               url:"<%=basePath%>/workbench/tranRemark/editRemark",
-               data:{
-                   'noteContent':$("#noteContent").val(),
-                   'id':$("#remarkId").val()
-               },
-               type:"post",
-               dataType:"json",
-               success:function (data) {
-                   if (data.ok) {
-                       layer.alert(data.message, {
-                           icon: 6,
-                           skin: 'layer-ext-demo'
-                       });
-                       //关闭模态框
-                       $("#editRemarkModal").modal("hide");
-                       //刷新页面
-                       $('#h5' + $('#remarkId').val()).text($('#noteContent').val());
-                   }else {
-                       layer.alert(data.message, {
-                           icon: 5,
-                           skin: 'layer-ext-demo'
-                       });
-                   }
-               }
-           })
-
+            if ($("#noteContent").val() == ""){
+                layer.alert("修改备注信息不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            } else {
+                $.ajax({
+                    url:"<%=basePath%>/workbench/tranRemark/editRemark",
+                    data:{
+                        'noteContent':$("#noteContent").val(),
+                        'id':$("#remarkId").val()
+                    },
+                    type:"post",
+                    dataType:"json",
+                    success:function (data) {
+                        if (data.ok) {
+                            layer.alert(data.message, {
+                                icon: 6,
+                                skin: 'layer-ext-demo'
+                            });
+                            //关闭模态框
+                            $("#editRemarkModal").modal("hide");
+                            //刷新页面
+                            $('#h5' + $('#remarkId').val()).text($('#noteContent').val());
+                        }else {
+                            layer.alert(data.message, {
+                                icon: 5,
+                                skin: 'layer-ext-demo'
+                            });
+                        }
+                    }
+                })
+            }
         });
     //删除备注
     function deleteTranRemark(id) {

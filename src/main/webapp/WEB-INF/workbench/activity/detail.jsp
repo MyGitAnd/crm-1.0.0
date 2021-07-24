@@ -395,35 +395,44 @@
 
     //添加备注信息
     $("#save").click(function () {
-        $.ajax({
-            url:"<%=basePath%>/workbench/activity/addRemark",
-            data:{
-                'noteContent':$("#remark").val(),
-                'activityId':'${requestScope.id}'
-            },
-            type:"post",
-            dataType:"json",
-            success:function (data) {
-                if (data.ok) {
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
-                    });
-                    $("#remark").val("");
-                    //刷新当前页面
-                    var activityRemark  = data.t;
-                    var activityRemarks = [] ;
-                    activityRemarks[0] = activityRemark;
-                    selectRemark(activityRemarks);
+        if ($("#remark").val() == ""){
+            layer.alert("添加备注信息不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
 
-                }else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
+        } else {
+            $.ajax({
+                url:"<%=basePath%>/workbench/activity/addRemark",
+                data:{
+                    'noteContent':$("#remark").val(),
+                    'activityId':'${requestScope.id}'
+                },
+                type:"post",
+                dataType:"json",
+                success:function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        $("#remark").val("");
+                        //刷新当前页面
+                        var activityRemark  = data.t;
+                        var activityRemarks = [] ;
+                        activityRemarks[0] = activityRemark;
+                        selectRemark(activityRemarks);
+
+                    }else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
                 }
-            }
-        })
+            })
+        }
+
     });
 
 
@@ -441,35 +450,41 @@
     }
 
     $("#updateRemarkBtn").click(function () {
+            if ($("#noteContent").val() == ""){
+                layer.alert("修改的备注不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            } else {
+                $.ajax({
+                    url:"<%=basePath%>/workbench/activity/updateRemark",
+                    data:{
+                        'id':$("#remarkId").val(),
+                        'noteContent':$("#noteContent").val()
+                    },
+                    type:"post",
+                    dataType:"json",
+                    success:function (data) {
+                        if (data.ok) {
+                            layer.alert(data.message, {
+                                icon: 6,
+                                skin: 'layer-ext-demo'
+                            });
+                            //关闭模态框
+                            $("#editRemarkModal").modal("hide");
+                            //刷新备注列表
+                            $('#h5'+ $('#remarkId').val()).text($('#noteContent').val());
 
-        $.ajax({
-        url:"<%=basePath%>/workbench/activity/updateRemark",
-        data:{
-        'id':$("#remarkId").val(),
-        'noteContent':$("#noteContent").val()
-            },
-         type:"post",
-         dataType:"json",
-         success:function (data) {
-                if (data.ok) {
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
-                    });
-                    //关闭模态框
-                    $("#editRemarkModal").modal("hide");
-                    //刷新备注列表
-                    $('#h5'+ $('#remarkId').val()).text($('#noteContent').val());
+                        }else {
+                            layer.alert(data.message, {
+                                icon: 5,
+                                skin: 'layer-ext-demo'
+                            });
+                        }
+                    }
 
-                }else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
-                }
+                });
             }
-
-        });
     });
 
     //删除

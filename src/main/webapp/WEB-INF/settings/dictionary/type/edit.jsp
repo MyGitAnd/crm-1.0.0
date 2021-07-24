@@ -73,32 +73,48 @@
 
     //修改的方法
     $("#updateType").click(function () {
-       $.ajax({
-           url:"<%=basePath%>/settings/editType/editType",
-           data:{
-              'code' :$("#code").val(),
-              'name':$("#name").val(),
-               'description':$("#describe").val()
-           },
-           dataType:"json",
-           type:"post",
-           success:function (data) {
-               if (data.ok){
-                   layer.alert(data.message, {
-                       icon: 6,
-                       skin: 'layer-ext-demo'
-                   });
-                   //刷新上页面
-                   window.opener.location.reload();
-               } else {
-                   layer.alert(data.message, {
-                       icon: 5,
-                       skin: 'layer-ext-demo'
-                   });
-               }
-           }
-       })
-
+        if ($("#code").val() == ""){
+            layer.alert("编码不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#name").val() == ""){
+            layer.alert("名称不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#describe").val() == ""){
+            layer.alert("描述不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else {
+            $.ajax({
+                url: "<%=basePath%>/settings/editType/editType",
+                data: {
+                    'code': $("#code").val(),
+                    'name': $("#name").val(),
+                    'description': $("#describe").val()
+                },
+                dataType: "json",
+                type: "post",
+                success: function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //刷新上页面
+                        window.opener.location.reload();
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
+                }
+            })
+        }
     });
 
 </script>

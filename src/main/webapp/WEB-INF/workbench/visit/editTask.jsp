@@ -206,26 +206,52 @@ $.ajax({
 
 //修改的方法
 $("#updateVisit").click(function () {
-
-    $.ajax({
-        url:"<%=basePath%>/workbench/Visit/addVisitAndUpdate",
-        data:$("#updateVisitForm").serialize(),
-        type:"get",
-        dataType:"json",
-        success:function (data) {
-            if (data.ok) {
-                layer.alert(data.message, {
-                    icon: 6,
-                    skin: 'layer-ext-demo'
-                });
-            } else {
-                layer.alert(data.message, {
-                    icon: 5,
-                    skin: 'layer-ext-demo'
-                });
+    if ($("#create-subject").val() == ""){
+        layer.alert("主题不能为空!", {
+            icon: 5,
+            skin: 'layer-ext-demo'
+        });
+    } else if ($("#create-expiryDate").val() == ""){
+        layer.alert("到期日期不能为空!", {
+            icon: 5,
+            skin: 'layer-ext-demo'
+        });
+    } else if ($("#create-contacts").val() == ""){
+        layer.alert("联系人不能为空!", {
+            icon: 5,
+            skin: 'layer-ext-demo'
+        });
+    } else if ($("#create-describe").val() == ""){
+        layer.alert("描述不能为空!", {
+            icon: 5,
+            skin: 'layer-ext-demo'
+        });
+    } else if ($("#create-startTime").val() == ""){
+        layer.alert("开始日期不能为空!", {
+            icon: 5,
+            skin: 'layer-ext-demo'
+        });
+    } else {
+        $.ajax({
+            url: "<%=basePath%>/workbench/Visit/addVisitAndUpdate",
+            data: $("#updateVisitForm").serialize(),
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                if (data.ok) {
+                    layer.alert(data.message, {
+                        icon: 6,
+                        skin: 'layer-ext-demo'
+                    });
+                } else {
+                    layer.alert(data.message, {
+                        icon: 5,
+                        skin: 'layer-ext-demo'
+                    });
+                }
             }
-        }
-    })
+        })
+    }
 });
 
 

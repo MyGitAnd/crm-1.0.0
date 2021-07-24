@@ -2,6 +2,7 @@ package com.bjpowernode.crm.settings.controller;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelWriter;
+import com.bjpowernode.crm.base.base.DicType;
 import com.bjpowernode.crm.base.base.DicValue;
 import com.bjpowernode.crm.base.base.ResultVo;
 import com.bjpowernode.crm.settings.service.DicValueService;
@@ -47,6 +48,14 @@ public class DicValueController {
     public ResultVo updateDicValue(DicValue dicValue){
 
         return dicValueService.updateDicValue(dicValue);
+    }
+
+    //查询的方法
+    @RequestMapping("/settings/dictionary/typeValues")
+    @ResponseBody
+    public List<DicType> typeValues(){
+
+        return dicValueService.typeValues();
     }
 
     //删除的方法

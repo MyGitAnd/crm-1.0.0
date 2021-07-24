@@ -556,26 +556,87 @@
 
     //添加线索
     $("#addDicType").click(function () {
-        $.ajax({
-            url:"<%=basePath%>/settings/contacts/addAndUpdateClue",
-            type:"post",
-            dataType:"json",
-            data:$("#ClueForm").serialize(),
-            success:function (data) {
-                if (data.ok) {
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
-                    });
-                    refresh(1,3);
-                }else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
+        if ($("#create-company").val() == ""){
+            layer.alert("公司不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-name").val() == ""){
+            layer.alert("姓名不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#create-job").val() == "") {
+            layer.alert("职位不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-email").val() == ""){
+            layer.alert("邮箱不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#create-phone").val() == ""){
+            layer.alert("公司座机不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-website").val() == ""){
+            layer.alert("公司网站不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#create-mphone").val() == ""){
+            layer.alert("手机不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#create-describe").val() == ""){
+            layer.alert("线索描述不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#create-contactSummary").val() == ""){
+            layer.alert("联系纪要不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#create-nextContactTime").val() == ""){
+            layer.alert("下次联系时间不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#create-address").val() == ""){
+            layer.alert("详细地址不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else {
+            $.ajax({
+                url:"<%=basePath%>/settings/contacts/addAndUpdateClue",
+                type:"post",
+                dataType:"json",
+                data:$("#ClueForm").serialize(),
+                success:function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        refresh(1,3);
+                        //重置表单
+                        $("#ClueForm")[0].reset();
+                    }else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
+
+
     });
     //复选框
     $("#father").click(function () {
@@ -636,26 +697,39 @@
     }
     //修改的保存方法
     $("#updateClue").click(function () {
-        $.ajax({
-            url:"<%=basePath%>/settings/contacts/addAndUpdateClue",
-            type:"post",
-            dataType:"json",
-            data:$("#updateClueFrom").serialize(),
-            success:function (data) {
-                if (data.ok) {
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
-                    });
-                    refresh(1,3);
-                }else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
+        if ($("#edit-company").val() == ""){
+            layer.alert("公司不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#edit-surname").val() == ""){
+            layer.alert("姓名不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else {
+            $.ajax({
+                url:"<%=basePath%>/settings/contacts/addAndUpdateClue",
+                type:"post",
+                dataType:"json",
+                data:$("#updateClueFrom").serialize(),
+                success:function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        refresh(1,3);
+                    }else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
+
     });
     //删除的方法
     $("#deleteClue").click(function () {

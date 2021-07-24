@@ -415,73 +415,131 @@
    //修改和添加功能的实现
        function addOrUpdate(content){
            if (content == "保存"){
-               //保存
-               $.ajax({
-                   url:"<%=basePath%>/workbench/activity/addAndUpdate",
-                   type:"post",
-                   data: {
-                       'owner':$("#create-marketActivityOwner").val(),
-                       'name':$("#create-marketActivityName").val(),
-                       'startDate':$("#create-startTime").val(),
-                       'endDate':$("#create-endTime").val(),
-                       'cost':$("#create-cost").val(),
-                       'description':$("#create-describe").val()
-                   },
-               // $('#addActivityForm').serialize(),//可以使用这种方式要设置name值
-                   dataType:"json",
-                   success:function (data) {
-                       //保存完毕后清空表单中的数据
-                       $('#createActivityModal').on('hidden.bs.modal', function (){
-                           document.getElementById("addActivityForm").reset();
+                //校验非空
+               if ($("#create-marketActivityName").val() == ""){
+                   layer.alert("名称不能为空！", {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
                    });
-                       if (data.ok){
-                           layer.alert(data.message, {
-                               icon: 6,
-                               skin: 'layer-ext-demo'
+               }else if ( $("#create-startTime").val() == "") {
+                   layer.alert("开始日期不能为空！", {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
+                   });
+               }else if ( $("#create-endTime").val() == "") {
+                   layer.alert("结束日期不能为空！", {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
+                   });
+               }else if ( $("#create-cost").val() == "") {
+                   layer.alert("成本不能为空！", {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
+                   });
+               }else if ( $("#create-describe").val() == "") {
+                   layer.alert("描述不能为空！", {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
+                   });
+               }else {
+                   //保存
+                   $.ajax({
+                       url:"<%=basePath%>/workbench/activity/addAndUpdate",
+                       type:"post",
+                       data: {
+                           'owner':$("#create-marketActivityOwner").val(),
+                           'name':$("#create-marketActivityName").val(),
+                           'startDate':$("#create-startTime").val(),
+                           'endDate':$("#create-endTime").val(),
+                           'cost':$("#create-cost").val(),
+                           'description':$("#create-describe").val()
+                       },
+                       // $('#addActivityForm').serialize(),//可以使用这种方式要设置name值
+                       dataType:"json",
+                       success:function (data) {
+                           //保存完毕后清空表单中的数据
+                           $('#createActivityModal').on('hidden.bs.modal', function (){
+                               document.getElementById("addActivityForm").reset();
                            });
-                           refresh(1,3);
+                           if (data.ok){
+                               layer.alert(data.message, {
+                                   icon: 6,
+                                   skin: 'layer-ext-demo'
+                               });
+                               refresh(1,3);
 
-                       } else {
-                           layer.alert(data.message, {
-                               icon: 5,
-                               skin: 'layer-ext-demo'
-                           });
+                           } else {
+                               layer.alert(data.message, {
+                                   icon: 5,
+                                   skin: 'layer-ext-demo'
+                               });
+                           }
                        }
-                   }
-               });
+                   });
+               }
+
 
          } else {
-              //修改的
-               $.ajax({
-                   url:"<%=basePath%>/workbench/activity/addAndUpdate",
-                   type:"post",
-                   data: {
-                       'owner':$("#edit-marketActivityOwner").val(),
-                       'name':$("#edit-marketActivityName").val(),
-                       'startDate':$("#edit-startTime").val(),
-                       'endDate':$("#edit-endTime").val(),
-                       'cost':$("#edit-cost").val(),
-                       'description':$("#edit-describe").val(),
-                       'id':$("#id").val()
-                   },
-                   // $("#editActivityForm").serialize()//可以使用这种方式要设置name值
-                   dataType:"json",
-                   success:function (data) {
-                       $('#father').removeAttr('checked');
-                       if (data.ok){
-                           layer.alert(data.message, {
-                               icon: 6,
-                               skin: 'layer-ext-demo'
-                           });
-                           refresh(1,3);
-                       } else {
-                           layer.alert(data.message, {
-                               icon: 5,
-                               skin: 'layer-ext-demo'
-                           });
+               //校验非空
+               if ($("#edit-marketActivityName").val() == ""){
+                   layer.alert("名称不能为空！", {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
+                   });
+               }else if ( $("#edit-startTime").val() == "") {
+                   layer.alert("开始日期不能为空！", {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
+                   });
+               }else if ( $("#edit-endTime").val() == "") {
+                   layer.alert("结束日期不能为空！", {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
+                   });
+               }else if ( $("#edit-cost").val() == "") {
+                   layer.alert("成本不能为空！", {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
+                   });
+               }else if ( $("#edit-describe").val() == "") {
+                   layer.alert("描述不能为空！", {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
+                   });
+               }else {
+                   //修改的
+                   $.ajax({
+                       url:"<%=basePath%>/workbench/activity/addAndUpdate",
+                       type:"post",
+                       data: {
+                           'owner':$("#edit-marketActivityOwner").val(),
+                           'name':$("#edit-marketActivityName").val(),
+                           'startDate':$("#edit-startTime").val(),
+                           'endDate':$("#edit-endTime").val(),
+                           'cost':$("#edit-cost").val(),
+                           'description':$("#edit-describe").val(),
+                           'id':$("#id").val()
+                       },
+                       // $("#editActivityForm").serialize()//可以使用这种方式要设置name值
+                       dataType:"json",
+                       success:function (data) {
+                           $('#father').removeAttr('checked');
+                           if (data.ok){
+                               layer.alert(data.message, {
+                                   icon: 6,
+                                   skin: 'layer-ext-demo'
+                               });
+                               refresh(1,3);
+                           } else {
+                               layer.alert(data.message, {
+                                   icon: 5,
+                                   skin: 'layer-ext-demo'
+                               });
+                           }
                        }
-                   }
-               });
+                   });
+
+               }
 
            }
        }

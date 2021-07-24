@@ -723,27 +723,39 @@
     });
     //真正修改的方法
     $("#updateClue").click(function () {
-        $.ajax({
-            url: "<%=basePath%>/settings/contacts/addAndUpdateClue",
-            type: "post",
-            dataType: "json",
-            data: $("#updateClueFrom").serialize(),
-            success: function (data) {
-                if (data.ok) {
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
-                    });
-                    //刷新当前页面
-                    window.location.reload();
-                } else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
+        if ($("#edit-company").val() == ""){
+            layer.alert("公司不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#edit-surname").val() == ""){
+            layer.alert("姓名不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else {
+            $.ajax({
+                url: "<%=basePath%>/settings/contacts/addAndUpdateClue",
+                type: "post",
+                dataType: "json",
+                data: $("#updateClueFrom").serialize(),
+                success: function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //刷新当前页面
+                        window.location.reload();
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     //删除的方法
@@ -779,6 +791,12 @@
     });
     //添加备注
     $("#saveRemark").click(function () {
+        if ($("#remark").val() == ""){
+            layer.alert("添加备注信息不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else {
         $.ajax({
             url: "<%=basePath%>/workbench/clue/saveRemark",
             data: {
@@ -807,7 +825,7 @@
                 }
             }
         });
-
+        }
     });
 
     //修改备注信息
@@ -821,35 +839,41 @@
     }
 
     $("#updateRemarkBtn").click(function () {
-
-        $.ajax({
-            url: "<%=basePath%>/workebench/clueRemark/updateClueRemark",
-            data: {
-                'noteContent': $("#noteContent").val(),
-                'id': $("#remarkId").val()
-            },
-            type: "post",
-            dataType: "json",
-            success: function (data) {
-                if (data.ok) {
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
-                    });
-                    //关闭模态框
-                    $("#editRemarkModal").modal("hide");
-                    //刷新页面
-                    $('#h5' + $('#remarkId').val()).text($('#noteContent').val());
-                    //刷新当前页面
-                    window.location.reload();
-                } else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
+        if ($("#noteContent").val() == ""){
+            layer.alert("修改的备注不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else {
+            $.ajax({
+                url: "<%=basePath%>/workebench/clueRemark/updateClueRemark",
+                data: {
+                    'noteContent': $("#noteContent").val(),
+                    'id': $("#remarkId").val()
+                },
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //关闭模态框
+                        $("#editRemarkModal").modal("hide");
+                        //刷新页面
+                        $('#h5' + $('#remarkId').val()).text($('#noteContent').val());
+                        //刷新当前页面
+                        window.location.reload();
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
                 }
-            }
-        })
+            })
+        }
     });
 
     //删除备注信息

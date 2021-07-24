@@ -412,7 +412,44 @@
     //添加和修改
     function addAndUpdateCustomer(name){
         if (name == "保存"){
-            //添加的方法
+
+            if ($("#create-customerName").val() == ""){
+                layer.alert("名称不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            } else if ($("#create-website").val() == "") {
+                layer.alert("公司网站不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else if ($("#create-phone").val() == "") {
+                layer.alert("公司座机不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else if ($("#create-describe").val() == "") {
+                layer.alert("描述不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else if ($("#create-contactSummary").val() == "") {
+                layer.alert("联系纪要不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else if ($("#create-nextContactTime").val() == "") {
+                layer.alert("下次联系时间不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else if ($("#create-address1").val() == "") {
+                layer.alert("详细地址不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else {
+                //添加的方法
                 $.ajax({
                     url:"<%=basePath%>/workbench/customer/addAndUpdateCustomer",
                     data:$("#CustomerForm").serialize(),
@@ -430,6 +467,8 @@
                             });
                             //添加成功刷新当前页面
                             refresh(1,3);
+                            //清空表单数据
+                            $("#CustomerForm")[0].reset();
                         } else {
                             layer.alert(data.message, {
                                 icon: 5,
@@ -439,36 +478,73 @@
                     }
 
                 });
-
+            }
         } else {
-            //修改的
-            $.ajax({
-                url:"<%=basePath%>/workbench/customer/addAndUpdateCustomer",
-                data:$("#edit-CustomerForm").serialize(),
-                dataType:"json",
-                type:"post",
-                success:function (data) {
-                    //修改成功后把复选框选中的去掉
-                    $('#father').removeAttr('checked');
-                    //添加成功清空表单数据
-                    $('#createCustomerModal').on('hidden.bs.modal', function (){
-                        document.getElementById("CustomerForm").reset();
-                    });
-                    if (data.ok){
-                        layer.alert(data.message, {
-                            icon: 6,
-                            skin: 'layer-ext-demo'
+            if ($("#edit-customerName").val() == ""){
+                layer.alert("名称不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            } else if ($("#edit-website").val() == "") {
+                layer.alert("公司网站不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else if ($("#edit-phone").val() == "") {
+                layer.alert("公司座机不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else if ($("#edit-describe").val() == "") {
+                layer.alert("描述不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else if ($("#create-contactSummary1").val() == "") {
+                layer.alert("联系纪要不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else if ($("#create-nextContactTime2").val() == "") {
+                layer.alert("下次联系时间不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else if ($("#create-address").val() == "") {
+                layer.alert("详细地址不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            }else {
+                //修改的
+                $.ajax({
+                    url: "<%=basePath%>/workbench/customer/addAndUpdateCustomer",
+                    data: $("#edit-CustomerForm").serialize(),
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        //修改成功后把复选框选中的去掉
+                        $('#father').removeAttr('checked');
+                        //添加成功清空表单数据
+                        $('#createCustomerModal').on('hidden.bs.modal', function () {
+                            document.getElementById("CustomerForm").reset();
                         });
-                        //修改成功刷新当前页面
-                        refresh(1,3);
-                    } else {
-                        layer.alert(data.message, {
-                            icon: 5,
-                            skin: 'layer-ext-demo'
-                        });
+                        if (data.ok) {
+                            layer.alert(data.message, {
+                                icon: 6,
+                                skin: 'layer-ext-demo'
+                            });
+                            //修改成功刷新当前页面
+                            refresh(1, 3);
+                        } else {
+                            layer.alert(data.message, {
+                                icon: 5,
+                                skin: 'layer-ext-demo'
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 }
 

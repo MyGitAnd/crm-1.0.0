@@ -81,7 +81,22 @@
 
 
     $("#updateDicValue").click(function () {
-
+        if ($("#edit-dicValue").val() == ""){
+            layer.alert("字典值不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#edit-text").val() == ""){
+            layer.alert("文本不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#edit-orderNo").val() == ""){
+            layer.alert("排序号不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else {
         $.ajax({
             url:"<%=basePath%>/settings/dicValue/updateDicValue",
             data:{
@@ -108,6 +123,7 @@
                 }
             }
         });
+        }
     })
 
 

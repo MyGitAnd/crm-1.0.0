@@ -554,66 +554,124 @@
 
     //真正修改的方法
     $("#updateContacts").click(function () {
-        $.ajax({
-            url:"<%=basePath%>/workbench/Contacts/addContactsAndUpdate",
-            data:$("#ContactsFromUpdate").serialize(),
-            type:"post",
-            dataType:"json",
-            success:function (data) {
-                //添加成功清空表单数据
-                $('#createContactsModal').on('hidden.bs.modal', function (){
-                    document.getElementById("ContactsFrom").reset();
-                });
-                if (data.ok){
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
+        if ($("#edit-surname").val() == ""){
+            layer.alert("姓名不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#edit-job").val() == ""){
+            layer.alert("职位不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#edit-mphone").val() == ""){
+            layer.alert("手机不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#edit-email").val() == ""){
+            layer.alert("邮箱不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#edit-birth").val() == ""){
+            layer.alert("生日不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else if ($("#edit-customerName").val() == ""){
+            layer.alert("客户名称不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }   else if ($("#edit-describe").val() == ""){
+            layer.alert("描述不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-contactSummary").val() == ""){
+            layer.alert("联系纪要不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-nextContactTime").val() == ""){
+            layer.alert("下次联系时间不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#edit-address2").val() == ""){
+            layer.alert("详细地址不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }  else {
+            $.ajax({
+                url: "<%=basePath%>/workbench/Contacts/addContactsAndUpdate",
+                data: $("#ContactsFromUpdate").serialize(),
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    //添加成功清空表单数据
+                    $('#createContactsModal').on('hidden.bs.modal', function () {
+                        document.getElementById("ContactsFrom").reset();
                     });
-                    //添加成功刷新当前页面
-                    location.reload();
-                } else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //添加成功刷新当前页面
+                        location.reload();
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
                 }
-            }
-        })
+            })
+        }
     });
 
     //添加备注的方法
     $("#addRemark").click(function () {
+        if ($("#remark").val() == ""){
+            layer.alert("添加备注不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else {
+            $.ajax({
+                url:"<%=basePath%>/workbench/contactsRemark/addRemark",
+                data:{
+                    'noteContent':$("#remark").val(),
+                    'contactsId':'${requestScope.id}'
+                },
+                dataType:"json",
+                type:"post",
+                success:function (data) {
+                    if (data.ok){
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //添加成功刷新当前页面
+                        $("#remark").val("");
+                        //刷新页面
+                        var contacts = data.t;
+                        var contact = [];
+                        contact[0] = contacts;
+                        selectContactsRemark(contact)
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
 
-        $.ajax({
-            url:"<%=basePath%>/workbench/contactsRemark/addRemark",
-            data:{
-               'noteContent':$("#remark").val(),
-                'contactsId':'${requestScope.id}'
-            },
-            dataType:"json",
-            type:"post",
-            success:function (data) {
-                if (data.ok){
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
-                    });
-                    //添加成功刷新当前页面
-                    $("#remark").val("");
-                    //刷新页面
-                    var contacts = data.t;
-                    var contact = [];
-                    contact[0] = contacts;
-                    selectContactsRemark(contact)
-                } else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
                 }
-
-            }
-        })
+            })
+        }
     });
 
     //修改备注
@@ -628,36 +686,41 @@
 
     //修改备注信息
     $("#updateRemarkBtn").click(function () {
-
-            $.ajax({
-                url:"<%=basePath%>/workbench/contactsRemark/addRemark",
-                data:{
-                    'noteContent':$("#noteContent").val(),
-                    'contactsId':'${requestScope.id}',
-                    'id':$("#remarkId").val()
-                },
-                dataType:"json",
-                type:"post",
-                success:function (data) {
-                    if (data.ok){
-                        layer.alert(data.message, {
-                            icon: 6,
-                            skin: 'layer-ext-demo'
-                        });
-                        //修改成功刷新当前页面
-                        //关闭模态框
-                        $("#editRemarkModal").modal("hide");
-                        //刷新页面
-                        $('#h5' + $('#remarkId').val()).text($('#noteContent').val());
-                    } else {
-                        layer.alert(data.message, {
-                            icon: 5,
-                            skin: 'layer-ext-demo'
-                        });
+            if ($("#noteContent").val() == ""){
+                layer.alert("修改备注不能为空!", {
+                    icon: 5,
+                    skin: 'layer-ext-demo'
+                });
+            } else {
+                $.ajax({
+                    url:"<%=basePath%>/workbench/contactsRemark/addRemark",
+                    data:{
+                        'noteContent':$("#noteContent").val(),
+                        'contactsId':'${requestScope.id}',
+                        'id':$("#remarkId").val()
+                    },
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        if (data.ok){
+                            layer.alert(data.message, {
+                                icon: 6,
+                                skin: 'layer-ext-demo'
+                            });
+                            //修改成功刷新当前页面
+                            //关闭模态框
+                            $("#editRemarkModal").modal("hide");
+                            //刷新页面
+                            $('#h5' + $('#remarkId').val()).text($('#noteContent').val());
+                        } else {
+                            layer.alert(data.message, {
+                                icon: 5,
+                                skin: 'layer-ext-demo'
+                            });
+                        }
                     }
-                }
-            })
-
+                })
+            }
     });
     //删除的方法
     function openDeleteModal(id){

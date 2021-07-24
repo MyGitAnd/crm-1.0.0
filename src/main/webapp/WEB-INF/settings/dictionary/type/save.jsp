@@ -55,32 +55,50 @@
 <script>
 
     $("#save").click(function () {
-        //添加
-        $.ajax({
-            url:"<%=basePath%>/settings/dictionary/type/save",
-            data:{
-                'code':$("#code").val(),
-                'name':$("#name").val(),
-                'description':$("#describe").val()
-            },
-            type:"post",
-            dataType:"json",
-            success:function (data) {
-                if (data.ok){
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
-                    });
-                    //刷新上页面
-                    // window.opener.location.reload();
-                } else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
+
+        if ($("#code").val() == ""){
+            layer.alert("编码不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#name").val() == ""){
+            layer.alert("名称不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else if ($("#describe").val() == ""){
+            layer.alert("描述不能为空", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else {
+            //添加
+            $.ajax({
+                url: "<%=basePath%>/settings/dictionary/type/save",
+                data: {
+                    'code': $("#code").val(),
+                    'name': $("#name").val(),
+                    'description': $("#describe").val()
+                },
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //刷新上页面
+                        // window.opener.location.reload();
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
                 }
-            }
-        })
+            })
+        }
     });
 
 </script>

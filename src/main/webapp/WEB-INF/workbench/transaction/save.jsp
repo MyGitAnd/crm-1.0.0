@@ -366,26 +366,79 @@
 
     //添加
     function addTran() {
-
-        $.ajax({
-            url:"<%=basePath%>/workbench/transaction/addTranUpdate",
-            data:$("#tranForm").serialize(),
-            type:"post",
-            dataType:"json",
-            success:function (data) {
-                if (data.ok) {
-                    layer.alert(data.message, {
-                        icon: 6,
-                        skin: 'layer-ext-demo'
-                    });
-                } else {
-                    layer.alert(data.message, {
-                        icon: 5,
-                        skin: 'layer-ext-demo'
-                    });
+        if ($("#create-amountOfMoney").val() == ""){
+            layer.alert("金额不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-transactionName").val() == ""){
+            layer.alert("名称不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-expectedClosingDate").val() == ""){
+            layer.alert("预计成交日期不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-accountName").val() == ""){
+            layer.alert("客户名称不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-possibility").val() == ""){
+            layer.alert("可能性不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-activitySrc").val() == ""){
+            layer.alert("市场活动源不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-contactsName").val() == ""){
+            layer.alert("联系人名称不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-describe").val() == ""){
+            layer.alert("描述不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-contactSummary").val() == ""){
+            layer.alert("联系纪要不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        } else if ($("#create-nextContactTime").val() == ""){
+            layer.alert("下次联系时间不能为空!", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else {
+            $.ajax({
+                url: "<%=basePath%>/workbench/transaction/addTranUpdate",
+                data: $("#tranForm").serialize(),
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    if (data.ok) {
+                        layer.alert(data.message, {
+                            icon: 6,
+                            skin: 'layer-ext-demo'
+                        });
+                        //清空表单
+                        $("#tranForm")[0].reset();
+                    } else {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
 

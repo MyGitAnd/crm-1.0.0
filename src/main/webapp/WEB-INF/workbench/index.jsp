@@ -298,9 +298,9 @@
             var confirmPwd = $("#confirmPwd").val();
             var newPwd = $("#newPwd").val();
 
-            if (confirmPwd == "" && newPwd==""){
+            if (confirmPwd == "" || newPwd==""){
 
-                layer.alert("保存失败!", {
+                layer.alert("密码不能为空!", {
                     icon: 4,
                     skin: 'layer-ext-demo'});
                 $.ajax({
@@ -317,7 +317,7 @@
                     }
                 });
             //    只能更改密码的时候才能修改头像
-            } else if (confirmPwd == newPwd){
+            } else if (confirmPwd != "" && newPwd!="" &&confirmPwd == newPwd){
 
                 $.ajax({
                     url:"<%=basePath%>/setting/user/update",
