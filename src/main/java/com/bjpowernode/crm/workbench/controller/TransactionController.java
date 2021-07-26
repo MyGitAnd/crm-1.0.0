@@ -74,7 +74,13 @@ public class TransactionController {
     public ResultVo addTranUpdate(Transaction transaction,HttpSession session){
         User user = (User) session.getAttribute("user");
 
-        return transactionService.addTranUpdate(transaction,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = transactionService.addTranUpdate(transaction, user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //修改的查询方法
@@ -90,14 +96,26 @@ public class TransactionController {
     @ResponseBody
     public ResultVo deletesTran(String ids){
 
-        return transactionService.deletesTran(ids);
+        ResultVo resultVo = null;
+        try {
+            resultVo = transactionService.deletesTran(ids);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //详情页删除的方法
     @RequestMapping("/workbench/Tran/deleteTran")
     @ResponseBody
     public ResultVo deleteTran(String id){
-        return transactionService.deleteTran(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = transactionService.deleteTran(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //查询的方法
@@ -122,7 +140,13 @@ public class TransactionController {
     @ResponseBody
     public ResultVo addRemark(TransactionRemark transactionRemark,HttpSession session){
         User user = (User) session.getAttribute("user");
-        return transactionService.addRemark(transactionRemark,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = transactionService.addRemark(transactionRemark, user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //修改备注
@@ -131,7 +155,13 @@ public class TransactionController {
     public ResultVo editRemark(TransactionRemark transactionRemark,HttpSession session){
         User user = (User) session.getAttribute("user");
 
-        return transactionService.editRemark(transactionRemark,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = transactionService.editRemark(transactionRemark, user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //删除备注
@@ -139,7 +169,13 @@ public class TransactionController {
     @ResponseBody
     public ResultVo deleteRemark(String id){
 
-        return transactionService.deleteRemark(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = transactionService.deleteRemark(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     @RequestMapping("/workbench/Tran/exportExcel")

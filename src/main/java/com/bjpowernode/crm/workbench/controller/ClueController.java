@@ -29,8 +29,13 @@ public class ClueController {
     @ResponseBody
     public ResultVo addClue(Clue clue, HttpSession session){
         User user = (User) session.getAttribute("user");
-        ResultVo resultVo = clueService.addAndUpdateClue(clue,user);
-     return resultVo;
+        ResultVo resultVo = null;
+        try {
+            resultVo = clueService.addAndUpdateClue(clue,user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //查询
@@ -58,8 +63,13 @@ public class ClueController {
     @ResponseBody
     public ResultVo deleteClue(String ids){
 
-       ResultVo resultVo = clueService.deleteClue(ids);
-       return resultVo;
+        ResultVo resultVo = null;
+        try {
+            resultVo = clueService.deleteClue(ids);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //查询副页面的表单数据
@@ -75,7 +85,13 @@ public class ClueController {
     @ResponseBody
     public ResultVo delete(String id){
 
-     return  clueService.delete(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = clueService.delete(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
     //添加备注信息
     @RequestMapping("/workbench/clue/saveRemark")
@@ -83,22 +99,38 @@ public class ClueController {
     public ResultVo saveRemark(ClueRemark clueRemark,HttpSession session){
         User user = (User) session.getAttribute("user");
 
-      ResultVo resultVo = clueService.saveRemark(clueRemark,user);
-      return resultVo;
+        ResultVo resultVo = null;
+        try {
+            resultVo = clueService.saveRemark(clueRemark,user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
     //修改备注信息
     @RequestMapping("/workebench/clueRemark/updateClueRemark")
     @ResponseBody
     public ResultVo updateClueRemark(ClueRemark clueRemark,HttpSession session){
         User user = (User) session.getAttribute("user");
-        ResultVo resultVo = clueService.updateClueRemark(clueRemark,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = clueService.updateClueRemark(clueRemark,user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
         return resultVo;
     }
     //删除备注信息
     @RequestMapping("/workbench/clueRemark/deleteClueRemark")
     @ResponseBody
     public ResultVo deleteClueRemark(String id){
-      return   clueService.deleteClueRemark(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = clueService.deleteClueRemark(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //查询关联的市场活动
@@ -123,7 +155,12 @@ public class ClueController {
     @ResponseBody
     public ResultVo addClueActivitys(String id,String ids){
 
-        ResultVo resultVo = clueService.addClueActivitys(id,ids);
+        ResultVo resultVo = null;
+        try {
+            resultVo = clueService.addClueActivitys(id,ids);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
 
         return resultVo;
     }
@@ -133,7 +170,12 @@ public class ClueController {
     @ResponseBody
     public ResultVo deleteClueActivity(String activityId,String clueId){
 
-        ResultVo resultVo = clueService.deleteClueActivity(activityId,clueId);
+        ResultVo resultVo = null;
+        try {
+            resultVo = clueService.deleteClueActivity(activityId,clueId);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
         return resultVo;
     }
 
@@ -159,7 +201,13 @@ public class ClueController {
     public ResultVo transfer(HttpSession session, String isTran, Transaction transaction,String id){
         User user = (User) session.getAttribute("user");
 
-        return clueService.transfer(user,isTran,transaction,id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = clueService.transfer(user, isTran, transaction, id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //导出报表

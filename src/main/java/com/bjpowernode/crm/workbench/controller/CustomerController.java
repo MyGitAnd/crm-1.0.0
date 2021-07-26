@@ -52,9 +52,14 @@ public class CustomerController {
     @ResponseBody
     public ResultVo insertCustomer(Customer customer, HttpSession session){
        User user = (User) session.getAttribute("user");
-       ResultVo resultVo = customerService.insertAndUpdateCustomer(customer,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = customerService.insertAndUpdateCustomer(customer,user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
 
-       return resultVo;
+        return resultVo;
     }
 
 
@@ -70,7 +75,12 @@ public class CustomerController {
     @RequestMapping("/workbench/customer/deleteCustomers")
     @ResponseBody
     public ResultVo deleteCustomers(String ids){
-        ResultVo resultVo = customerService.deleteCustomers(ids);
+        ResultVo resultVo = null;
+        try {
+            resultVo = customerService.deleteCustomers(ids);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
 
         return resultVo;
     }
@@ -89,7 +99,12 @@ public class CustomerController {
     @ResponseBody
     public ResultVo deleteCustomer(String id){
 
-      ResultVo resultVo = customerService.deleteCustomer(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = customerService.deleteCustomer(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
         return resultVo;
     }
 
@@ -99,7 +114,16 @@ public class CustomerController {
     public ResultVo save(CustomerRemark customerRemark,HttpSession session){
 
         User user = (User) session.getAttribute("user");
-       ResultVo resultVo = customerService.save(customerRemark,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = customerService.save(customerRemark,user);
+        } catch (Exception e) {
+            try {
+                resultVo.setMessage(e.getMessage());
+            } catch (Exception e1) {
+                resultVo.setMessage(e.getMessage());
+            }
+        }
 
 
         return resultVo;
@@ -111,9 +135,14 @@ public class CustomerController {
     public ResultVo update(CustomerRemark customerRemark,HttpSession session){
         User user = (User) session.getAttribute("user");
 
-       ResultVo resultVo = customerService.update(customerRemark,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = customerService.update(customerRemark,user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
 
-       return resultVo;
+        return resultVo;
     }
 
 
@@ -122,7 +151,12 @@ public class CustomerController {
     @ResponseBody
     public ResultVo delete(String id){
 
-        ResultVo resultVo = customerService.delete(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = customerService.delete(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
 
         return resultVo;
     }
@@ -140,7 +174,13 @@ public class CustomerController {
     @ResponseBody
     public ResultVo deleteContactsTran(String id){
 
-        return customerService.deleteContactsTran(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = customerService.deleteContactsTran(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //查询联系人
@@ -156,7 +196,13 @@ public class CustomerController {
     @ResponseBody
     public ResultVo deleteContacts(String id){
 
-        return customerService.deleteContacts(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = customerService.deleteContacts(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //添加联系人
@@ -164,7 +210,13 @@ public class CustomerController {
     @ResponseBody
     public ResultVo addContactsCustomer(Contacts contacts,HttpSession session){
         User user = (User) session.getAttribute("user");
-        return customerService.addContactsCustomer(contacts,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = customerService.addContactsCustomer(contacts, user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //导出报表

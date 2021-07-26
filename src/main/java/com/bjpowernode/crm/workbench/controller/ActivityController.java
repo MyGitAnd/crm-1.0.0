@@ -75,7 +75,12 @@ public class ActivityController {
     public ResultVo deletesActivity(String ids){
 
 
-        ResultVo resultVo = activityService.deletesActivitys(ids);
+        ResultVo resultVo = null;
+        try {
+            resultVo = activityService.deletesActivitys(ids);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
 
         return resultVo;
     }
@@ -94,7 +99,12 @@ public class ActivityController {
     public ResultVo deleteActivity(String id){
 
 
-        ResultVo resultVo = activityService.deleteActivity(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = activityService.deleteActivity(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
 
         return resultVo;
     }
@@ -105,9 +115,14 @@ public class ActivityController {
     public ResultVo addRemark(ActivityRemark activityRemark,HttpSession session){
      User user = (User)session.getAttribute("user");
 
-    ResultVo resultVo =  activityService.addRemark(activityRemark,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = activityService.addRemark(activityRemark,user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
 
-    return resultVo;
+        return resultVo;
     }
 
     //修改备注信息
@@ -117,7 +132,12 @@ public class ActivityController {
 
         User user = (User)session.getAttribute("user");
 
-        ResultVo resultVo =  activityService.updateRemark(activityRemark,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = activityService.updateRemark(activityRemark,user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
 
         return resultVo;
 
@@ -129,7 +149,12 @@ public class ActivityController {
     @ResponseBody
     public ResultVo deleteRemark(String id){
 
-        ResultVo resultVo =  activityService.deleteRemark(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = activityService.deleteRemark(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
         return resultVo;
     }
 

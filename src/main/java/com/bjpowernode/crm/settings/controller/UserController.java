@@ -85,7 +85,12 @@ public class UserController {
     @ResponseBody
     public ResultVo FileUpload(MultipartFile img,HttpServletRequest request){
         //调用工具类
-        ResultVo resultVo = FileUploadUtil.FileUpload(img, request);
+        ResultVo resultVo = null;
+        try {
+            resultVo = FileUploadUtil.FileUpload(img, request);
+        } catch (CrmException e) {
+            resultVo.setMessage(e.getMessage());
+        }
 
         return resultVo;
     }

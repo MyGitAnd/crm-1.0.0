@@ -34,7 +34,13 @@ public class DicTypeController {
     @ResponseBody
     public ResultVo save(DicType dicType){
 
-    return  dicTypeService.save(dicType);
+        ResultVo resultVo = null;
+        try {
+            resultVo = dicTypeService.save(dicType);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
     //修改的查询的方法
     @RequestMapping("/settings/editType/updateType")
@@ -48,15 +54,26 @@ public class DicTypeController {
     @ResponseBody
     public ResultVo editType(DicType dicType){
 
-        return dicTypeService.editType(dicType);
+        ResultVo resultVo = null;
+        try {
+            resultVo = dicTypeService.editType(dicType);
+        } catch (Exception e) {
+          resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //删除的方法
     @RequestMapping("/settings/clueType/DeleteDicType")
     @ResponseBody
     public ResultVo deleteDicType(String ids){
-
-        return dicTypeService.deleteDicType(ids);
+        ResultVo resultVo = null;
+        try {
+            resultVo = dicTypeService.deleteDicType(ids);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
 

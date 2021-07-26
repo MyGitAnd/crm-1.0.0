@@ -47,7 +47,13 @@ public class ContactsController {
     @ResponseBody
     public ResultVo addContactsAndUpdate(Contacts contacts,HttpSession session){
         User user = (User) session.getAttribute("user");
-        return contactsService.addContactsAndUpdate(contacts,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = contactsService.addContactsAndUpdate(contacts, user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //修改的查询方法
@@ -62,7 +68,13 @@ public class ContactsController {
     @ResponseBody
     public ResultVo deleteContacts(String ids){
 
-        return contactsService.deleteContacts(ids);
+        ResultVo resultVo = null;
+        try {
+            resultVo = contactsService.deleteContacts(ids);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //详情页查询的方法
@@ -78,7 +90,13 @@ public class ContactsController {
     @ResponseBody
     public ResultVo deleteContactsById(String id){
 
-        return contactsService.deleteContactsById(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = contactsService.deleteContactsById(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //添加备注的方法和修改
@@ -86,7 +104,13 @@ public class ContactsController {
     @ResponseBody
     public ResultVo addRemark(ContactsRemark contactsRemark,HttpSession session){
         User user = (User) session.getAttribute("user");
-        return contactsService.addRemark(contactsRemark,user);
+        ResultVo resultVo = null;
+        try {
+            resultVo = contactsService.addRemark(contactsRemark, user);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //删除备注的方法
@@ -94,7 +118,13 @@ public class ContactsController {
     @ResponseBody
     public ResultVo deleteRemark(String id){
 
-        return contactsService.deleteRemark(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = contactsService.deleteRemark(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //查询交易
@@ -110,7 +140,13 @@ public class ContactsController {
     @ResponseBody
     public ResultVo deleteTran(String id){
 
-        return contactsService.deleteTran(id);
+        ResultVo resultVo = null;
+        try {
+            resultVo = contactsService.deleteTran(id);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //查询市场活动
@@ -133,7 +169,13 @@ public class ContactsController {
     @ResponseBody
     public ResultVo addContactsActivity(String contactsId,String ids){
 
-        return contactsService.addContactsActivity(contactsId,ids);
+        ResultVo resultVo = null;
+        try {
+            resultVo = contactsService.addContactsActivity(contactsId, ids);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //解除关联
@@ -141,7 +183,13 @@ public class ContactsController {
     @ResponseBody
     public ResultVo deleteContactsActivity(ContactsActivity contactsActivity){
 
-        return contactsService.deleteContactsActivity(contactsActivity);
+        ResultVo resultVo = null;
+        try {
+            resultVo = contactsService.deleteContactsActivity(contactsActivity);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     @RequestMapping("/workbench/Contacts/exportExcel")

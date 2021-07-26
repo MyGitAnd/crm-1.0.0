@@ -33,7 +33,13 @@ public class DicValueController {
     @RequestMapping("/settings/dicValue/addDicValue")
     @ResponseBody
     public ResultVo addDicValue(DicValue dicValue){
-        return dicValueService.addDicValue(dicValue);
+        ResultVo resultVo = null;
+        try {
+            resultVo = dicValueService.addDicValue(dicValue);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
     //修改的查询的方法
     @RequestMapping("/settings/DicValue/selectValue")
@@ -47,7 +53,13 @@ public class DicValueController {
     @ResponseBody
     public ResultVo updateDicValue(DicValue dicValue){
 
-        return dicValueService.updateDicValue(dicValue);
+        ResultVo resultVo = null;
+        try {
+            resultVo = dicValueService.updateDicValue(dicValue);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //查询的方法
@@ -62,7 +74,13 @@ public class DicValueController {
     @RequestMapping("/settings/DicValue/deleteDicValue")
     @ResponseBody
     public ResultVo deleteDicValue(String ids){
-        return dicValueService.deleteDicValue(ids);
+        ResultVo resultVo = null;
+        try {
+            resultVo = dicValueService.deleteDicValue(ids);
+        } catch (Exception e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
     }
 
     //导出报表
