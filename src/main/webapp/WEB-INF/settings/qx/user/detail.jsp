@@ -1,13 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+
+            request.getServerPort()+request.getContextPath();
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="../../../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-<link href="../../../../jquery/zTree_v3-master/css/zTreeStyle/zTreeStyle.css" type="text/css" rel="stylesheet" />
+<link href="<%=basePath%>/jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="<%=basePath%>/jquery/zTree_v3-master/css/zTreeStyle/zTreeStyle.css" type="text/css" rel="stylesheet" />
 
-<script type="text/javascript" src="../../../../jquery/jquery-1.11.1-min.js"></script>
-<script type="text/javascript" src="../../../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/zTree_v3-master/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/jquery/zTree_v3-master/js/jquery.ztree.all.min.js"></script>
 
 <SCRIPT type="text/javascript">
 	var setting = {

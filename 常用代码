@@ -21,3 +21,7 @@ $.ajax({
  $.post("demo_test.asp",{参数},function(data,status){
 
   });
+
+
+ //延迟跳转页面
+ window.setTimeout("window.location='<%=basePath%>/toView/settings/dictionary/type/index'",2000);

@@ -171,7 +171,7 @@
                         </c:choose>
 					<ul class="dropdown-menu">
 						<li><a href="<%=basePath%>/toView/workbench/index"><span class="glyphicon glyphicon-home"></span> 工作台</a></li>
-						<li><a href="index.jsp"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a></li>
+						<li><a href="<%=basePath%>/toView/settings/index"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a></li>
 						<li><a href="javascript:void(0)" data-toggle="modal" data-target="#myInformation"><span class="glyphicon glyphicon-file"></span> 我的资料</a></li>
 						<li><a href="javascript:void(0)" data-toggle="modal" data-target="#editPwdModal"><span class="glyphicon glyphicon-edit"></span> 修改密码</a></li>
 						<li><a href="javascript:void(0);" data-toggle="modal" data-target="#exitModal"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
@@ -200,9 +200,9 @@
 				<!-- 
 				<a href="org/index.jsp" style="text-decoration: none; color: red;">组织机构</a>
 				 -->
-				<a href="dept/index.html">部门管理</a>
+				<a href="<%=basePath%>/toView/settings/dept/index">部门管理</a>
 				<br>
-				<a href="qx/index.jsp">权限管理</a>
+				<a href="<%=basePath%>/toView/settings/qx/index">权限管理</a>
 			</div>
 			
 			<div style="position: relative; width: 33%; height: 50%; left: 33%; top: -100%">
@@ -291,13 +291,13 @@
 
         if (confirmPwd == "" && newPwd==""){
 
-            layer.alert("保存成功!", {
-                icon: 6,
+            layer.alert("保存失败!", {
+                icon: 4,
                 skin: 'layer-ext-demo'});
             $.ajax({
                 url:"<%=basePath%>/setting/user/update",
                 data:{
-                    'img' : $('#photo').val(),
+                    'img' : $('#photo').val()
                 },
                 type: "post",
                 dataType:"json",

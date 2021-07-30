@@ -4,6 +4,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.DicType;
 import com.bjpowernode.crm.base.base.ResultVo;
+import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.settings.service.DicTypeService;
 import com.bjpowernode.crm.workbench.base.ClueActivity;
 import com.github.pagehelper.PageInfo;
@@ -37,7 +38,7 @@ public class DicTypeController {
         ResultVo resultVo = null;
         try {
             resultVo = dicTypeService.save(dicType);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -57,7 +58,7 @@ public class DicTypeController {
         ResultVo resultVo = null;
         try {
             resultVo = dicTypeService.editType(dicType);
-        } catch (Exception e) {
+        } catch (CrmException e) {
           resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -70,7 +71,7 @@ public class DicTypeController {
         ResultVo resultVo = null;
         try {
             resultVo = dicTypeService.deleteDicType(ids);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;

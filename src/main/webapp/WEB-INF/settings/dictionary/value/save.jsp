@@ -110,6 +110,8 @@
                         });
                         //刷新上页面
                         // window.opener.location.reload();
+                        //延迟跳转页面
+                        window.setTimeout("window.location='<%=basePath%>/toView/settings/dictionary/value/index'",2000);
                     } else {
                         layer.alert(data.message, {
                             icon: 5,

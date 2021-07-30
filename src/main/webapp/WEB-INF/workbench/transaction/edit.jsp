@@ -446,6 +446,9 @@
                             icon: 6,
                             skin: 'layer-ext-demo'
                         });
+
+                        //延迟跳转页面
+                        window.setTimeout("window.location='<%=basePath%>/toView/workbench/transaction/index'",2000);
                     } else {
                         layer.alert(data.message, {
                             icon: 5,

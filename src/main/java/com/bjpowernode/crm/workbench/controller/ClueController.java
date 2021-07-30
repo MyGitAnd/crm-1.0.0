@@ -2,6 +2,7 @@ package com.bjpowernode.crm.workbench.controller;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.ResultVo;
+import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.workbench.base.Activity;
 import com.bjpowernode.crm.workbench.base.Clue;
 import com.bjpowernode.crm.settings.bean.User;
@@ -32,7 +33,7 @@ public class ClueController {
         ResultVo resultVo = null;
         try {
             resultVo = clueService.addAndUpdateClue(clue,user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -66,7 +67,7 @@ public class ClueController {
         ResultVo resultVo = null;
         try {
             resultVo = clueService.deleteClue(ids);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -88,7 +89,7 @@ public class ClueController {
         ResultVo resultVo = null;
         try {
             resultVo = clueService.delete(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -102,7 +103,7 @@ public class ClueController {
         ResultVo resultVo = null;
         try {
             resultVo = clueService.saveRemark(clueRemark,user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -115,7 +116,7 @@ public class ClueController {
         ResultVo resultVo = null;
         try {
             resultVo = clueService.updateClueRemark(clueRemark,user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -127,7 +128,7 @@ public class ClueController {
         ResultVo resultVo = null;
         try {
             resultVo = clueService.deleteClueRemark(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -158,7 +159,7 @@ public class ClueController {
         ResultVo resultVo = null;
         try {
             resultVo = clueService.addClueActivitys(id,ids);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
 
@@ -173,7 +174,7 @@ public class ClueController {
         ResultVo resultVo = null;
         try {
             resultVo = clueService.deleteClueActivity(activityId,clueId);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -204,7 +205,7 @@ public class ClueController {
         ResultVo resultVo = null;
         try {
             resultVo = clueService.transfer(user, isTran, transaction, id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;

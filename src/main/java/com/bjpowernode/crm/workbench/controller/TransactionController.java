@@ -2,6 +2,7 @@ package com.bjpowernode.crm.workbench.controller;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.ResultVo;
+import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.settings.bean.User;
 import com.bjpowernode.crm.workbench.base.Activity;
 import com.bjpowernode.crm.workbench.base.Contacts;
@@ -77,7 +78,7 @@ public class TransactionController {
         ResultVo resultVo = null;
         try {
             resultVo = transactionService.addTranUpdate(transaction, user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -99,7 +100,7 @@ public class TransactionController {
         ResultVo resultVo = null;
         try {
             resultVo = transactionService.deletesTran(ids);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -112,7 +113,7 @@ public class TransactionController {
         ResultVo resultVo = null;
         try {
             resultVo = transactionService.deleteTran(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -143,7 +144,7 @@ public class TransactionController {
         ResultVo resultVo = null;
         try {
             resultVo = transactionService.addRemark(transactionRemark, user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -158,7 +159,7 @@ public class TransactionController {
         ResultVo resultVo = null;
         try {
             resultVo = transactionService.editRemark(transactionRemark, user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -172,7 +173,7 @@ public class TransactionController {
         ResultVo resultVo = null;
         try {
             resultVo = transactionService.deleteRemark(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;

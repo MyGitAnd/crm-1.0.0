@@ -5,6 +5,7 @@ import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.DicType;
 import com.bjpowernode.crm.base.base.DicValue;
 import com.bjpowernode.crm.base.base.ResultVo;
+import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.settings.service.DicValueService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class DicValueController {
         ResultVo resultVo = null;
         try {
             resultVo = dicValueService.addDicValue(dicValue);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -56,7 +57,7 @@ public class DicValueController {
         ResultVo resultVo = null;
         try {
             resultVo = dicValueService.updateDicValue(dicValue);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -77,7 +78,7 @@ public class DicValueController {
         ResultVo resultVo = null;
         try {
             resultVo = dicValueService.deleteDicValue(ids);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;

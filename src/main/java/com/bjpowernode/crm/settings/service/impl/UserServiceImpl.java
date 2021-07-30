@@ -1,16 +1,24 @@
 package com.bjpowernode.crm.settings.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.bjpowernode.crm.base.exception.CrmEnum;
 import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.base.utils.DateTimeUtil;
 import com.bjpowernode.crm.base.utils.MD5Util;
+import com.bjpowernode.crm.settings.bean.Dept;
+import com.bjpowernode.crm.settings.bean.LockedState;
 import com.bjpowernode.crm.settings.bean.User;
 import com.bjpowernode.crm.settings.mapper.DeptMapper;
+import com.bjpowernode.crm.settings.mapper.LockedStateMapper;
 import com.bjpowernode.crm.settings.mapper.UserMapper;
 import com.bjpowernode.crm.settings.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +32,9 @@ public class UserServiceImpl implements UserService {
     //注入mapper层对象
     @Autowired
     private DeptMapper deptMapper;
+
+    @Autowired
+    private LockedStateMapper lockedStateMapper;
 
 
 
@@ -84,5 +95,56 @@ public class UserServiceImpl implements UserService {
 //           return dept;
 //    }
 
+    //查询所有用户信息
+    @Override
+    public PageInfo<User> selectAllUser(User user, Integer currentPage, Integer rowsPerPage,String startTime) {
+        Example example = new Example(User.class);
+        Example.Criteria criteria = example.createCriteria();
+        if (StrUtil.isNotEmpty(user.getName())){
+            criteria.andLike("name","%" + user.getName() + "%");
+        }
+        if (StrUtil.isNotEmpty(user.getDeptno())){
+           Example example1 = new Example(Dept.class);
+           example1.createCriteria().andLike("name","%" + user.getDeptno() + "%");
+            List<Dept> depts = deptMapper.selectByExample(example1);
+            List<String> list = new ArrayList<>();
+            for (Dept dept : depts) {
+                list.add(dept.getId());
+            }
+            criteria.andIn("deptno",list);
+        }
+        if (!("请选择").equals(user.getLockState())){
 
+            Example example1 = new Example(LockedState.class);
+            example1.createCriteria().andLike("name","%" + user.getLockState() + "%");
+            List<LockedState> lockedStates = lockedStateMapper.selectByExample(example);
+            List<String> list = new ArrayList<>();
+            for (LockedState lockedState : lockedStates) {
+                list.add(lockedState.getId());
+            }
+            criteria.andIn("lockState",list);
+        }
+        //当前时间
+        user.setCreateTime(startTime);
+        if (StrUtil.isNotEmpty(user.getCreateTime())){
+            criteria.andGreaterThanOrEqualTo("createTime",user.getCreateTime());
+        }
+        //过期时间
+        if (StrUtil.isNotEmpty(user.getExpireTime())){
+            criteria.andLessThanOrEqualTo("expireTime",user.getExpireTime());
+        }
+
+        PageHelper.startPage(currentPage,rowsPerPage);
+        List<User> users = userMapper.selectAll();
+        for (User user1 : users) {
+            Dept dept = deptMapper.selectByPrimaryKey(user1.getDeptno());
+            user1.setDeptno(dept.getName());
+
+            LockedState lockedState = lockedStateMapper.selectByPrimaryKey(user1.getLockState());
+            user1.setLockState(lockedState.getName());
+        }
+        PageInfo<User> pageInfo = new PageInfo<>(users);
+
+        return pageInfo;
+    }
 }

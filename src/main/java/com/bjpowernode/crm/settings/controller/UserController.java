@@ -8,6 +8,7 @@ import com.bjpowernode.crm.settings.bean.Dept;
 import com.bjpowernode.crm.settings.bean.User;
 import com.bjpowernode.crm.settings.service.DeptService;
 import com.bjpowernode.crm.settings.service.UserService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,12 +104,15 @@ public class UserController {
     //获取部门信息
         User user = (User) session.getAttribute("user");
 
-       Dept dept = deptService.dept(user.getDeptno());
-
-       user.setDeptno(dept.getId()+","+dept.getName());
-
-
         return user;
     }
 
+
+    //查询所有用户信息
+    @RequestMapping("/settings/user/selectAllUser")
+    @ResponseBody
+    public PageInfo<User> selectAllUser(User user,Integer currentPage,Integer rowsPerPage,String startTime){
+
+        return userService.selectAllUser(user,currentPage,rowsPerPage,startTime);
+    }
 }

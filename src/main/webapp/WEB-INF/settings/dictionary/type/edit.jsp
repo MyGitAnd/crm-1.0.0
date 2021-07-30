@@ -104,8 +104,10 @@
                             icon: 6,
                             skin: 'layer-ext-demo'
                         });
-                        //刷新上页面
-                        window.opener.location.reload();
+                        // //刷新上页面
+                        // window.opener.location.reload();
+                        //延迟跳转页面
+                        window.setTimeout("window.location='<%=basePath%>/toView/settings/dictionary/type/index'",2000);
                     } else {
                         layer.alert(data.message, {
                             icon: 5,

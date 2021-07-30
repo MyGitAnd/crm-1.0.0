@@ -3,6 +3,7 @@ package com.bjpowernode.crm.workbench.controller;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.ResultVo;
+import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.settings.bean.User;
 import com.bjpowernode.crm.workbench.base.*;
 import com.bjpowernode.crm.workbench.service.ContactsService;
@@ -50,7 +51,7 @@ public class ContactsController {
         ResultVo resultVo = null;
         try {
             resultVo = contactsService.addContactsAndUpdate(contacts, user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -71,7 +72,7 @@ public class ContactsController {
         ResultVo resultVo = null;
         try {
             resultVo = contactsService.deleteContacts(ids);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -93,7 +94,7 @@ public class ContactsController {
         ResultVo resultVo = null;
         try {
             resultVo = contactsService.deleteContactsById(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -107,7 +108,7 @@ public class ContactsController {
         ResultVo resultVo = null;
         try {
             resultVo = contactsService.addRemark(contactsRemark, user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -121,7 +122,7 @@ public class ContactsController {
         ResultVo resultVo = null;
         try {
             resultVo = contactsService.deleteRemark(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -143,7 +144,7 @@ public class ContactsController {
         ResultVo resultVo = null;
         try {
             resultVo = contactsService.deleteTran(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -172,7 +173,7 @@ public class ContactsController {
         ResultVo resultVo = null;
         try {
             resultVo = contactsService.addContactsActivity(contactsId, ids);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -186,7 +187,7 @@ public class ContactsController {
         ResultVo resultVo = null;
         try {
             resultVo = contactsService.deleteContactsActivity(contactsActivity);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;

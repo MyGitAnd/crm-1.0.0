@@ -3,6 +3,7 @@ package com.bjpowernode.crm.workbench.controller;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.bjpowernode.crm.base.base.ResultVo;
+import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.workbench.base.Contacts;
 import com.bjpowernode.crm.workbench.base.Customer;
 import com.bjpowernode.crm.workbench.base.CustomerRemark;
@@ -55,7 +56,7 @@ public class CustomerController {
         ResultVo resultVo = null;
         try {
             resultVo = customerService.insertAndUpdateCustomer(customer,user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
 
@@ -78,7 +79,7 @@ public class CustomerController {
         ResultVo resultVo = null;
         try {
             resultVo = customerService.deleteCustomers(ids);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
 
@@ -102,7 +103,7 @@ public class CustomerController {
         ResultVo resultVo = null;
         try {
             resultVo = customerService.deleteCustomer(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -117,7 +118,7 @@ public class CustomerController {
         ResultVo resultVo = null;
         try {
             resultVo = customerService.save(customerRemark,user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             try {
                 resultVo.setMessage(e.getMessage());
             } catch (Exception e1) {
@@ -138,7 +139,7 @@ public class CustomerController {
         ResultVo resultVo = null;
         try {
             resultVo = customerService.update(customerRemark,user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
 
@@ -154,7 +155,7 @@ public class CustomerController {
         ResultVo resultVo = null;
         try {
             resultVo = customerService.delete(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
 
@@ -177,7 +178,7 @@ public class CustomerController {
         ResultVo resultVo = null;
         try {
             resultVo = customerService.deleteContactsTran(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -199,7 +200,7 @@ public class CustomerController {
         ResultVo resultVo = null;
         try {
             resultVo = customerService.deleteContacts(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;
@@ -213,7 +214,7 @@ public class CustomerController {
         ResultVo resultVo = null;
         try {
             resultVo = customerService.addContactsCustomer(contacts, user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;

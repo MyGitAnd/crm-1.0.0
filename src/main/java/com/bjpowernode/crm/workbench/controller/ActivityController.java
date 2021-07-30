@@ -78,7 +78,7 @@ public class ActivityController {
         ResultVo resultVo = null;
         try {
             resultVo = activityService.deletesActivitys(ids);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
 
@@ -102,7 +102,7 @@ public class ActivityController {
         ResultVo resultVo = null;
         try {
             resultVo = activityService.deleteActivity(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
 
@@ -118,7 +118,7 @@ public class ActivityController {
         ResultVo resultVo = null;
         try {
             resultVo = activityService.addRemark(activityRemark,user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
 
@@ -135,7 +135,7 @@ public class ActivityController {
         ResultVo resultVo = null;
         try {
             resultVo = activityService.updateRemark(activityRemark,user);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
 
@@ -152,7 +152,7 @@ public class ActivityController {
         ResultVo resultVo = null;
         try {
             resultVo = activityService.deleteRemark(id);
-        } catch (Exception e) {
+        } catch (CrmException e) {
             resultVo.setMessage(e.getMessage());
         }
         return resultVo;

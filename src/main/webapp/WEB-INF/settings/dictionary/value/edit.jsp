@@ -113,8 +113,11 @@
                         icon: 6,
                         skin: 'layer-ext-demo'
                     });
+                    //延迟跳转页面
+                    window.setTimeout("window.location='<%=basePath%>/toView/settings/dictionary/value/index'",2000);
+
                     //刷新上页面
-                    window.opener.location.reload();
+                    // window.opener.location.reload();
                 } else {
                     layer.alert(data.message, {
                         icon: 5,
