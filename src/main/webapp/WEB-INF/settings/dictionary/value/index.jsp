@@ -99,7 +99,7 @@
                 for (var i = 0; i < dicValues.length; i++){
                     var dicValue = dicValues[i];
                             $("#dicValueTbody").append("<tr class=\"active\">\n" +
-                                "\t\t\t\t\t<td><input type=\"checkbox\" class='sun' value='"+dicValue.id+"'/></td>\n" +
+                                "\t\t\t\t\t<td><input type=\"checkbox\" class='sun' onclick='checkedes()' value='"+dicValue.id+"'/></td>\n" +
                                 "\t\t\t\t\t<td>"+dicValue.id2+"</td>\n" +
                                 "\t\t\t\t\t<td>"+dicValue.value+"</td>\n" +
                                 "\t\t\t\t\t<td>"+dicValue.text+"</td>\n" +

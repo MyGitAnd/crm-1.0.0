@@ -37,7 +37,7 @@
                 },
                 legend: {
                     orient: 'vertical',
-                    left: 'left',
+                    left: 'left'
                 },
                 series: [
                     {

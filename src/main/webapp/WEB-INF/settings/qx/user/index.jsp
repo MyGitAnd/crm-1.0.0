@@ -34,22 +34,22 @@
 				</div>
 				<div class="modal-body">
 				
-					<form class="form-horizontal" role="form">
+					<form class="form-horizontal" id="userForm" role="form">
 					
 						<div class="form-group">
 							<label for="create-loginActNo" class="col-sm-2 control-label">登录帐号<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-loginActNo">
+								<input type="text" class="form-control" name="loginAct" id="create-loginActNo">
 							</div>
 							<label for="create-username" class="col-sm-2 control-label">用户姓名</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-username">
+								<input type="text" class="form-control" name="name" id="create-username">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="create-loginPwd" class="col-sm-2 control-label">登录密码<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="password" class="form-control" id="create-loginPwd">
+								<input type="password" class="form-control" name="loginPwd" id="create-loginPwd">
 							</div>
 							<label for="create-confirmPwd" class="col-sm-2 control-label">确认密码<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -59,17 +59,17 @@
 						<div class="form-group">
 							<label for="create-email" class="col-sm-2 control-label">邮箱</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-email">
+								<input type="text" class="form-control" name="email" id="create-email">
 							</div>
 							<label for="create-expireTime" class="col-sm-2 control-label">失效时间</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-expireTime">
+								<input type="text" class="form-control" name="expireTime" id="create-expireTime">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="create-lockStatus" class="col-sm-2 control-label">锁定状态</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<select class="form-control" id="create-lockStatus">
+								<select class="form-control" name="lockState" id="create-lockStatus">
                                     <c:forEach var="lockedStates" items="${applicationScope.lockedStates}">
                                         <option value="${lockedStates.id}">${lockedStates.name}</option>
                                     </c:forEach>
@@ -77,7 +77,7 @@
 							</div>
 							<label class="col-sm-2 control-label">部门<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <select class="form-control" id="create-dept">
+                                <select class="form-control" name="deptno" id="create-dept">
                                     <c:forEach var="dept" items="${applicationScope.depts}">
                                         <option value="${dept.id}">${dept.name}</option>
                                     </c:forEach>
@@ -87,14 +87,14 @@
 						<div class="form-group">
 							<label for="create-allowIps" class="col-sm-2 control-label">允许访问的IP</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-allowIps" style="width: 280%" placeholder="多个用逗号隔开">
+								<input type="text" class="form-control" name="allowIps" id="create-allowIps" style="width: 280%" placeholder="多个用逗号隔开">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+					<button type="button" class="btn btn-primary" id="addUser" data-dismiss="modal">保存</button>
 				</div>
 			</div>
 		</div>
@@ -162,7 +162,7 @@
 	<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;left: 30px; width: 110%; top: 20px;">
 		<div class="btn-group" style="position: relative; top: 18%;">
 		  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createUserModal"><span class="glyphicon glyphicon-plus"></span> 创建</button>
-		  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+		  <button type="button" class="btn btn-danger" id="deleteUser"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 		</div>
 		
 	</div>
@@ -285,8 +285,8 @@
                 for (var i = 0;i < users.length;i++) {
                     var user = users[i];
                     $("#userTbody").append("<tr class=\"active\">\n" +
-                        "\t\t\t\t\t<td><input type=\"checkbox\" class=\"sun\" value="+user.id+" /></td>\n" +
-                        "\t\t\t\t\t<td>1</td>\n" +
+                        "\t\t\t\t\t<td><input type=\"checkbox\" class='sun'  onclick='checkedes()' value="+user.id+" /></td>\n" +
+                        "\t\t\t\t\t<td>"+user.index+"</td>\n" +
                         "\t\t\t\t\t<td><a onclick=\"location.href='<%=basePath%>/toView/settings/qx/user/detail?id="+user.id+"'\" href=\"javascript:void 0;\">"+user.loginAct+"</a></td>\n" +
                         "\t\t\t\t\t<td>"+user.name+"</td>\n" +
                         "\t\t\t\t\t<td>"+user.deptno+"</td>\n" +
@@ -326,12 +326,131 @@
     //模糊查询
     $("#likeSelect").click(function () {
         refresh(1,3);
-    })
+    });
 
     //添加
+    $("#addUser").click(function () {
+       if ($("#create-loginActNo").val() == ""){
+           layer.alert("账号不能为空!", {
+               icon: 5,
+               skin: 'layer-ext-demo'
+           });
+       } else if ($("#create-username").val() == ""){
+           layer.alert("姓名不能为空!", {
+               icon: 5,
+               skin: 'layer-ext-demo'
+           });
+       }  else if ($("#create-loginPwd").val() == ""){
+           layer.alert("登录密码不能为空!", {
+               icon: 5,
+               skin: 'layer-ext-demo'
+           });
+       }  else if ($("#create-confirmPwd").val() != $("#create-loginPwd").val()){
+           layer.alert("两次输入的密码不一致,请重新输入!", {
+               icon: 5,
+               skin: 'layer-ext-demo'
+           });
+       }  else if ($("#create-email").val() == ""){
+           layer.alert("邮箱不能为空!", {
+               icon: 5,
+               skin: 'layer-ext-demo'
+           });
+       }  else if ($("#create-allowIps").val() == ""){
+           layer.alert("允许访问的IP不能为空!", {
+               icon: 5,
+               skin: 'layer-ext-demo'
+           });
+       } else {
+
+           $.ajax({
+               url:"<%=basePath%>/settings/user/addUser",
+               data:$("#userForm").serialize(),
+               type:"get",
+               dataType:"json",
+               success:function (data) {
+                   if (data.ok){
+                       layer.alert(data.message, {
+                           icon: 6,
+                           skin: 'layer-ext-demo'
+                       });
+                   }
+                   //清空表单数据
+                   $("#userForm")[0].reset();
+                   refresh(1,3);
+               }, error:function (data) {
+                   layer.alert(data.message, {
+                       icon: 5,
+                       skin: 'layer-ext-demo'
+                   });
+               }
+           });
+       }
+    });
+
+    //全选和全不选
+    $("#father").click(function () {
+       $(".sun") .prop("checked",$(this).prop("checked"));
+    });
+
+    function checkedes(){
+        //获取子复选框的数量
+        var length = $(".sun").length;
+        //获取勾中的数量
+        var checkedLength = $(".sun:checked").length;
+
+        if (length == checkedLength){
+            $("#father").prop("checked",true);
+        } else {
+            $("#father").prop("checked",false);
+        }
+    }
 
 
+    //删除
+    $("#deleteUser").click(function () {
+        var checkedLength = $(".sun:checked").length;
+        if (checkedLength < 0) {
+            layer.alert("请至少选择一条数据！", {
+                icon: 5,
+                skin: 'layer-ext-demo'
+            });
+        }else {
+            layer.confirm('确定要删除' + checkedLength + '条记录吗？', {
+                btn: ['确定', '取消']
+                // 按钮
+            }, function () {
+                var ids = [];
+                $(".sun:checked").each(function () {
+                    ids.push($(this).val());
+                });
 
+                $.ajax({
+                    url:"<%=basePath%>/settings/user/deleteUser",
+                    data:{
+                        'ids':ids.join()
+                    },
+                    type:"post",
+                    dataType:"json",
+                    success:function (data) {
+                        if (data.ok){
+                            layer.alert(data.message, {
+                                icon: 6,
+                                skin: 'layer-ext-demo'
+                            });
+                            //刷新当前页面
+                            refresh(1,3);
+                        }
+                    },error:function (data) {
+                        layer.alert(data.message, {
+                            icon: 5,
+                            skin: 'layer-ext-demo'
+                        });
+                    }
+                })
+
+            })
+        }
+    })
 
 
 </script>

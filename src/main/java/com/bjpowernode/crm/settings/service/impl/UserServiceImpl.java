@@ -1,10 +1,12 @@
 package com.bjpowernode.crm.settings.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.bjpowernode.crm.base.base.ResultVo;
 import com.bjpowernode.crm.base.exception.CrmEnum;
 import com.bjpowernode.crm.base.exception.CrmException;
 import com.bjpowernode.crm.base.utils.DateTimeUtil;
 import com.bjpowernode.crm.base.utils.MD5Util;
+import com.bjpowernode.crm.base.utils.UUIDUtil;
 import com.bjpowernode.crm.settings.bean.Dept;
 import com.bjpowernode.crm.settings.bean.LockedState;
 import com.bjpowernode.crm.settings.bean.User;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -136,15 +139,90 @@ public class UserServiceImpl implements UserService {
 
         PageHelper.startPage(currentPage,rowsPerPage);
         List<User> users = userMapper.selectAll();
+        int i = 1;
         for (User user1 : users) {
             Dept dept = deptMapper.selectByPrimaryKey(user1.getDeptno());
             user1.setDeptno(dept.getName());
 
             LockedState lockedState = lockedStateMapper.selectByPrimaryKey(user1.getLockState());
             user1.setLockState(lockedState.getName());
+
+            user1.setIndex(i);
+            i++;
         }
         PageInfo<User> pageInfo = new PageInfo<>(users);
 
         return pageInfo;
+    }
+    //添加用户
+    @Override
+    public ResultVo addUser(User user) {
+        ResultVo resultVo = new ResultVo();
+        user.setId(UUIDUtil.getUUID());
+        user.setLoginPwd(MD5Util.getMD5(user.getLoginPwd()));
+        user.setCreateBy(user.getName());
+        user.setCreateTime(DateTimeUtil.getSysTime());
+        int count = userMapper.insertSelective(user);
+        if (count == 0){
+            throw new CrmException(CrmEnum.User_add_User);
+        }
+        resultVo.setOk(true);
+        resultVo.setMessage("用户添加成功!");
+        return resultVo;
+    }
+
+    //删除用户
+    @Override
+    public ResultVo deleteUser(String ids) {
+        ResultVo resultVo = new ResultVo();
+        List<String> list = Arrays.asList(ids.split(","));
+        Example example = new Example(User.class);
+        example.createCriteria().andIn("id",list);
+        int count = userMapper.deleteByExample(example);
+        if (count == 0){
+            throw new CrmException(CrmEnum.User_delete_User);
+        }
+        resultVo.setOk(true);
+        resultVo.setMessage("删除成功!共删除【"+count+"】条数据!");
+        return resultVo;
+    }
+
+    //查询用户
+    @Override
+    public User selectUser(String id) {
+        User user = userMapper.selectByPrimaryKey(id);
+
+        Dept dept = deptMapper.selectByPrimaryKey(user.getDeptno());
+        user.setDeptno(dept.getName());
+
+        LockedState lockedState = lockedStateMapper.selectByPrimaryKey(user.getLockState());
+        user.setLockState(lockedState.getName());
+
+
+
+        return user;
+    }
+    //修改的查询方法
+    @Override
+    public User selectUser2(String id) {
+
+        User user = userMapper.selectByPrimaryKey(id);
+        return user;
+    }
+
+    //修改
+    @Override
+    public ResultVo updateUser(User user) {
+        ResultVo resultVo = new ResultVo();
+        user.setEditBy(user.getName());
+        user.setEditTime(DateTimeUtil.getSysTime());
+        user.setLoginPwd(MD5Util.getMD5(user.getLoginPwd()));
+        int count = userMapper.updateByPrimaryKeySelective(user);
+        if (count == 0){
+            throw new CrmException(CrmEnum.User_update_User);
+        }
+        resultVo.setOk(true);
+        resultVo.setMessage("修改用户信息成功!");
+        return resultVo;
     }
 }

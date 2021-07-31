@@ -115,4 +115,62 @@ public class UserController {
 
         return userService.selectAllUser(user,currentPage,rowsPerPage,startTime);
     }
+
+    //添加用户
+    @RequestMapping("/settings/user/addUser")
+    @ResponseBody
+    public ResultVo addUser(User user){
+
+        ResultVo resultVo = null;
+        try {
+            resultVo = userService.addUser(user);
+        } catch (CrmException e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
+    }
+
+    //删除用户
+    @RequestMapping("/settings/user/deleteUser")
+    @ResponseBody
+    public ResultVo deleteUser(String ids){
+
+        ResultVo resultVo = null;
+        try {
+            resultVo = userService.deleteUser(ids);
+        } catch (CrmException e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
+    }
+
+    //查询用户
+    @RequestMapping("/settings/user/selectUser")
+    @ResponseBody
+    public User selectUser(String id){
+
+        return userService.selectUser(id);
+    }
+    //修改的查询
+    @RequestMapping("/settings/user/selectUser2")
+    @ResponseBody
+    public User selectUser2(String id){
+
+        return userService.selectUser2(id);
+    }
+    //修改
+    @RequestMapping("/settings/user/updateUser")
+    @ResponseBody
+    public ResultVo updateUser(User user){
+
+        ResultVo resultVo = null;
+        try {
+            resultVo = userService.updateUser(user);
+        } catch (CrmException e) {
+            resultVo.setMessage(e.getMessage());
+        }
+        return resultVo;
+    }
+
+
 }

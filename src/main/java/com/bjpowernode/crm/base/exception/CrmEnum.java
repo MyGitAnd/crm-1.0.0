@@ -74,8 +74,11 @@ public enum CrmEnum {
     VisitRemark__update_update("010-006","修改备注失败!"),
     VisitRemark__delete_delete("010-007","修改备注失败!"),
     Dept_Add_Add("011-001","添加部门失败!"),
-    Dept_update_update("011-001","修改部门失败!"),
-    Dept_delete_delete("011-001","删除部门失败!");
+    Dept_update_update("011-002","修改部门失败!"),
+    Dept_delete_delete("011-003","删除部门失败!"),
+    User_add_User("012-001","添加用户失败!"),
+    User_delete_User("012-002","删除用户失败!"),
+    User_update_User("012-003","修改用户失败!");
 
 
 

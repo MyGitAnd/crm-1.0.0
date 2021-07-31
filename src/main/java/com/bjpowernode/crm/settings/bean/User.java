@@ -5,6 +5,7 @@ import tk.mybatis.mapper.code.Style;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Data
 @Table(name = "tbl_user")
@@ -26,4 +27,7 @@ public class User {
    private String editTime;//编辑时间
    private String editBy;//编辑者
    private String img;
+
+   @Transient
+   private Integer index;
 }
