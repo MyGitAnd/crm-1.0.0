@@ -117,15 +117,7 @@ public class UserServiceImpl implements UserService {
             criteria.andIn("deptno",list);
         }
         if (!("请选择").equals(user.getLockState())){
-
-            Example example1 = new Example(LockedState.class);
-            example1.createCriteria().andLike("name","%" + user.getLockState() + "%");
-            List<LockedState> lockedStates = lockedStateMapper.selectByExample(example);
-            List<String> list = new ArrayList<>();
-            for (LockedState lockedState : lockedStates) {
-                list.add(lockedState.getId());
-            }
-            criteria.andIn("lockState",list);
+            criteria.andLike("lockState","%" + user.getLockState() + "%");
         }
         //当前时间
         user.setCreateTime(startTime);
@@ -138,7 +130,7 @@ public class UserServiceImpl implements UserService {
         }
 
         PageHelper.startPage(currentPage,rowsPerPage);
-        List<User> users = userMapper.selectAll();
+        List<User> users = userMapper.selectByExample(example);
         int i = 1;
         for (User user1 : users) {
             Dept dept = deptMapper.selectByPrimaryKey(user1.getDeptno());
