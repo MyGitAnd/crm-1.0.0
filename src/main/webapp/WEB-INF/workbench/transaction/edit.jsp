@@ -315,7 +315,7 @@
     $("#addClueActivity").click(function () {
         var id = $($(".sun:checked")[0]).val();
         //给单选按钮id赋给隐藏域
-        // $("#activityId").val(id);
+         $("#activityId").val(id);
         //把选中的市场活动展现给用户看
         var text = $($(".sun:checked")[0]).parent().next().text();
         $("#edit-activitySrc").val(text);
@@ -353,7 +353,7 @@
     $("#addClueActivity1").click(function () {
         var id = $($(".sun1:checked")[0]).val();
         //给单选按钮id赋给隐藏域
-        // $("#contactsId").val(id);
+         $("#contactsId").val(id);
         //把选中的市场活动展现给用户看
         var text = $($(".sun1:checked")[0]).parent().next().text();
         $("#edit-contactsName").val(text);
